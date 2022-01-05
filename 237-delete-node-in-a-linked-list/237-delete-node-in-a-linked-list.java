@@ -13,10 +13,8 @@ class Solution {
            
         }
         
-        ListNode temp = head.next;
-        head.val = temp.val;
-        head.next = temp.next;
-        
+        head.val = head.next.val;
+        head.next = head.next.next;
        // return head;
         
     }
