@@ -24,8 +24,11 @@ class Solution {
         if(root== null){
             return;
         }
-        val = val<<1|root.val;
-        if(root.left == null && root.right == null) sum[0] += val;
+        val = val*2 + root.val;
+        if(root.left == null && root.right == null) {
+            sum[0] += val;
+            val = val/10;
+        }
         solve(root.left,val,sum);
         solve(root.right,val,sum);
     }
