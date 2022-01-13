@@ -8,7 +8,6 @@ class Solution {
     void solve(int[] arr,List<Integer>list,int i,List<List<Integer>>matrix){
         if(i==arr.length){
             matrix.add(new ArrayList<>(list));
-            // list.clear();
             return;
         }
         list.add(arr[i]);
