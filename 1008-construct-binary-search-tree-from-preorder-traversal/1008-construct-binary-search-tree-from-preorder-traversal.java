@@ -15,30 +15,37 @@
  */
 class Solution {
     public TreeNode bstFromPreorder(int[] preorder) {
-        ArrayList<Integer> list = new ArrayList<>();
+        ArrayList<Integer> A = new ArrayList<>();
         for(int i=0; i<preorder.length; i++){
-            list.add(preorder[i]);
+            A.add(preorder[i]);
         }
-        return solve(list);
+        TreeNode root = new TreeNode(A.get(0));
+        for(int i=1; i<A.size(); i++){
+            solve(root,A.get(i));
+        }
+        return root;
         
     }
-    TreeNode solve(ArrayList<Integer> list){
-        if(list.isEmpty())return null;
-        int rootvalue = list.get(0);
-        ArrayList<Integer> left = new ArrayList<>();
-        ArrayList<Integer> right = new ArrayList<>();
+    void solve(TreeNode node , int val){
+        if(node==null)return;
 
-        for(int i=1; i<list.size(); i++){
-            if(list.get(i)<rootvalue){
-                left.add(list.get(i));
-            }
-            else{
-                right.add(list.get(i));
+        if(node.left==null){
+            if(val<node.val){
+                node.left = new TreeNode(val);
+                return;
             }
         }
-        TreeNode root = new TreeNode(rootvalue);
-        root.left = solve(left);
-        root.right = solve(right);
-        return root;
-    }
+        if(node.right==null){
+            if(val>node.val){
+                node.right = new TreeNode(val);
+                return;
+            }
+        }
+        if(val<node.val){
+            solve(node.left,val);
+        }
+        if(val>node.val){
+            solve(node.right,val);
+        }
+    }        
 }
