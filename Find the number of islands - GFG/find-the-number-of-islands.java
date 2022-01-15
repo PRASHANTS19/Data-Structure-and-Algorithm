@@ -37,7 +37,7 @@ class Solution {
         
         for(int i=0; i<n; i++){
             for(int j=0; j<m; j++){
-                if(vis[i][j]==0 && grid[i][j]=='1' ){
+                if(grid[i][j]=='1' ){
                     dfs(i,j,vis,grid,n,m );
                     c++;
                 }
@@ -49,8 +49,9 @@ class Solution {
         if(i<0 || j<0 || i>=n || j>=m) return;
         if(grid[i][j]=='0') return;
         
-        if(visi[i][j] == 0){
-            visi[i][j]=1;
+        //if(visi[i][j] == 0){
+            //visi[i][j]=1;
+            grid[i][j]='0';
             dfs(i+1 , j , visi , grid , n , m);
             dfs(i-1 , j , visi , grid , n , m);
             dfs(i , j+1 , visi , grid , n , m);
@@ -59,6 +60,7 @@ class Solution {
             dfs(i-1 , j-1 , visi , grid , n , m);
             dfs(i+1 , j-1 , visi , grid , n , m);
             dfs(i-1 , j+1 , visi , grid , n , m);
-        }
+            //grid[i][j]='1';
+        //}
     }
 }
