@@ -11,6 +11,11 @@
 import java.util.*;
 class Solution {
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = mergeRecursive( l1,  l2 );
+        return dummy;
+   
+    }
+    public static ListNode mergeRecursive(ListNode l1, ListNode l2){
         ListNode result;
         if(l1==null){
             return l2;
@@ -22,14 +27,12 @@ class Solution {
         
         if(l1.val<l2.val){
             result = l1;
-            result.next =  mergeTwoLists( l1.next,  l2);
+            result.next =  mergeRecursive( l1.next,  l2);
         }
         else{
            result = l2;
-            result.next =  mergeTwoLists( l1,  l2.next);
+            result.next =  mergeRecursive( l1,  l2.next);
         }
         return result;
-   
     }
-   
 }
