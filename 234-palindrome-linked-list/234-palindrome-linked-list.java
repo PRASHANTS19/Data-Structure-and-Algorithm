@@ -13,30 +13,32 @@ class Solution {
        
         ListNode slow = head;
         ListNode fast = head;
-        while(fast!=null && fast.next!=null){
-            slow  = slow.next;
-            fast = fast.next.next;
-        }
-        if(fast!=null)slow =slow.next;
+       while(fast!=null && fast.next!=null){
+           fast = fast.next.next;
+           slow = slow.next;
+       }
+        if(fast!=null)slow = slow.next;
         slow = reverse(slow);
+        
         while(slow!=null){
-            if(head.val!=slow.val){
-                return false;
-            }
-            head = head.next;
+            if(head.val!=slow.val)return false;
             slow = slow.next;
+            head = head.next;
         }
         return true;
-        
     }
     ListNode reverse(ListNode head){
-         ListNode prev = null;
-        while (head != null) {
-            ListNode next = head.next;
-            head.next = prev;
-            prev = head;
-            head = next;
+        ListNode prev=null;
+        ListNode curr=head;
+        ListNode next=curr;
+        
+        while(curr!=null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
-    return prev;
+        
+        return prev;
     }
 }
