@@ -10,14 +10,13 @@ class Solution {
         for(int i=start; i<n; i++){
             l1.add(arr[i]);
         }
-        for(int i=0; i<start; i++){
-            l2.add(arr[i]);
+        start = n-k-1;
+        int end = n-1;
+        while(start>=0){
+            arr[end--] = arr[start--];
         }
-        start = 0;
+        start=0;
         for(int x : l1){
-            arr[start++] = x;
-        }
-        for(int x : l2){
             arr[start++] = x;
         }
         
