@@ -4,22 +4,16 @@ class Solution {
         k=k%n;
         if(k==0)return;
         
-        ArrayList<Integer> l1 = new ArrayList<>();
-        ArrayList<Integer> l2 = new ArrayList<>();
-        int start = n-k;
-        for(int i=start; i<n; i++){
-            l1.add(arr[i]);
+        reverse(0,n-1,arr);
+        reverse(0,k-1,arr);
+        reverse(k,n-1,arr);
+     }
+    void reverse(int start,int end,int[] arr){
+        while(start<end){
+            int temp = arr[start];
+            arr[start] = arr[end];
+            arr[end] = temp;
+            start++; end--;
         }
-        start = n-k-1;
-        int end = n-1;
-        while(start>=0){
-            arr[end--] = arr[start--];
-        }
-        start=0;
-        for(int x : l1){
-            arr[start++] = x;
-        }
-        
-        
     }
 }
