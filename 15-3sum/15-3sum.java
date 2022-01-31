@@ -8,14 +8,15 @@ class Solution {
             int j=i+1; int k=n-1;
             while(j<k){
                 if(arr[i]+arr[j]+arr[k]==0){
-                    matrix.add(Arrays.asList(arr[i],arr[j],arr[k]));
+                    List<Integer> list = new ArrayList<>(Arrays.asList(arr[i],arr[j],arr[k]));
+                    matrix.add(list);
                     //can remove duplicacy by skipping duplicates
                     while(j<k && arr[j]==arr[j+1])j++;
                     while(j<k && arr[k]==arr[k-1])k--;
                     j++; k--;
                 }
                 else if(arr[i]+arr[j]+arr[k]>0)k--;
-                else j++;
+                else j++;  
             }
             while(i<n-2 && arr[i]==arr[i+1])i++;
         }
