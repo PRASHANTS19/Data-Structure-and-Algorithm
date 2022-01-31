@@ -4,7 +4,8 @@ class Solution {
         Arrays.sort(arr);
         if(arr.length==0)return matrix;
         for(int i=0; i<arr.length-2; i++){
-            if(i>0 && arr[i]==arr[i-1])continue; //help to remove the dup to enter in the list.
+            if(i>0 && arr[i]==arr[i-1])continue; 
+            //help to remove the dup to enter in the list.
             int j=i+1; int k=arr.length-1;
             while(j<k){
                 if(arr[j]+arr[k]==-arr[i]){
