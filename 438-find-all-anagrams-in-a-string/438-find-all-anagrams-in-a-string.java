@@ -1,39 +1,39 @@
 class Solution {
     public List<Integer> findAnagrams(String str, String aux) {
         
-        int dummy[] = new int[130];
-        int n = aux.length();
+        HashMap<Character,Integer> map1 = new HashMap<>();
+         int n = aux.length();
         List<Integer> list = new ArrayList<>();
         if(n>str.length())return list;
-        for(int i=0; i<n; i++){
-            dummy[aux.charAt(i)]++;
+        
+        for(int i=0; i<aux.length(); i++){
+            char c = aux.charAt(i);
+            map1.put(c,map1.getOrDefault(c,0)+1);
         }
-        int arr[] = new int[130];
-        for(int i=0; i<n; i++){
-            arr[str.charAt(i)]++;
+        
+        
+        HashMap<Character,Integer> map2 = new HashMap<>();
+        for(int i=0; i<aux.length(); i++){
+            char c = str.charAt(i);
+            map2.put(c,map2.getOrDefault(c,0)+1);
         }
-        boolean flag = true;
-        for(int i=0; i<130; i++){
-            if(arr[i]!=dummy[i]){
-                flag = false;
-                break;
-            }
-        }
-        if(flag==true)list.add(0);
-        arr[str.charAt(0)]--;
+        
+        //List<Integer> list = new ArrayList<>();
+        if(map1.equals(map2))list.add(0);
+        map2.put(str.charAt(0),map2.get(str.charAt(0))-1);
+        if(map2.get(str.charAt(0))==0)map2.remove(str.charAt(0));
+        
         int j=1;
-        for(int i=n; i<str.length(); i++){
-            arr[str.charAt(i)]++;
-            flag=true;
-            for(int k=0; k<130; k++){
-                if(arr[k]!=dummy[k]){
-                    flag = false;
-                    break;
-                }
-            }
-            if(flag==true)list.add(i-n+1);
-            arr[str.charAt(j++)]--;
-          }
+        for(int i=aux.length(); i<str.length(); i++){
+            char c = str.charAt(i);
+            map2.put(c,map2.getOrDefault(c,0)+1);
+            if(map1.equals(map2))list.add(i-aux.length()+1);
+            //remove
+            map2.put(str.charAt(j),map2.get(str.charAt(j))-1);
+            if(map2.get(str.charAt(j))==0)map2.remove(str.charAt(j));
+               j++;
+            
+        }
         return list;
     }
 }
