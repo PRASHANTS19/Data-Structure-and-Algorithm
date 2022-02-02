@@ -1,4 +1,5 @@
 class Solution {
+    HashSet<List<Integer>>set = new HashSet<>();
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> matrix = new ArrayList<>();
         List<Integer> list = new ArrayList<>();
@@ -8,17 +9,18 @@ class Solution {
     }
     void solve(int[] arr,int i,List<Integer>list,List<List<Integer>> matrix,boolean cflag){
         if(i==arr.length){
-            matrix.add(new ArrayList<>(list));
+            if(set.contains(list)==false){
+                matrix.add(new ArrayList<>(list));
+                set.add(list);
+            }
             return;
         }
-        else{
-           
+        else{  
             solve(arr,i+1,list,matrix,false);
-            if(i>0 && arr[i]==arr[i-1] && !cflag)return;
+            //if(i>0 && arr[i]==arr[i-1] && !cflag)return;
             list.add(arr[i]);
             solve(arr,i+1,list,matrix,true);
             list.remove(list.size()-1);
-        }
-        
+        }  
     }
 }
