@@ -13,8 +13,8 @@ class Solution {
         
         for(int i = 0; i<125; i++){
             if(s1[i]!=t1[i])
-              { char x = (char)i;
-                return x;}
+              return(char)i;
+                
         }
         return ' ';
     
