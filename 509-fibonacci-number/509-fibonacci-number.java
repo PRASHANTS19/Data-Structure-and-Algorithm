@@ -1,15 +1,15 @@
 class Solution {
     public int fib(int n) {
-        int arr[] = new int[n+1];
-        Arrays.fill(arr,-1);
-        int ans = fibo(arr,n);
+        int dp[] = new int[n+1];
+        Arrays.fill(dp,-1);
+        int ans = fibo(dp,n);
         return ans;
     }
-    int fibo(int[] arr,int n){
+    int fibo(int[] dp,int n){
         if(n==0)return 0;
         if(n==1)return 1;
-    if(arr[n]!=-1)return arr[n];
+        if(dp[n]!=-1)return dp[n];
     
-    return arr[n]=fibo(arr,n-1)+fibo(arr,n-2);
+    return dp[n]=fibo(dp,n-1)+fibo(dp,n-2);
     }
 }
