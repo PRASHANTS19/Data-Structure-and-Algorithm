@@ -13,19 +13,16 @@ class Solution {
             else if(Integer.parseInt(v1[i])<Integer.parseInt(v2[j]))return -1;
             i++; j++;
         }
-        if(n1==n2)return 0;
         
         if(n1>n2){
             while(i<n1){
                 if(Integer.parseInt(v1[i])!=0)return 1;
-                
                 i++;
             }
         }
         else{
             while(j<n2){
-                if(Integer.parseInt(v2[j])!=0)return -1;
-                
+                if(Integer.parseInt(v2[j])!=0)return -1; 
                 j++;
             }
         }
