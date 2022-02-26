@@ -7,15 +7,13 @@ class Solution {
             Arrays.fill(x,-1);
         }
         boolean res[] = new boolean[1];
-        
-         solve(arr,i,j-1,true,dp,res);
+        solve(arr,i,j-1,true,dp,res);
         return res[0];
         
     }
     int solve(int arr[],int i,int j,boolean flag,int dp[][],boolean[] res){
         
         if(i<0||j<0||i>=arr.length||j>=arr.length|| i>j)return 0;
-        if(i==j)return arr[i];
         
         if(dp[i][j]!=-1)return dp[i][j];
         
