@@ -1,58 +1,30 @@
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        Arrays.sort(nums);
+        if (nums == null || nums.length == 0)
+            return new ArrayList<>();
         int n = nums.length;
-        int fact=1;
-        while(n>0){
-            fact = fact*n;
-            n--;
-        }
-        List<List<Integer>> matrix  = new ArrayList<>();
-        for(int i=0; i<fact; i++){
-            nextPermutation(nums);
-            List<Integer> list = new ArrayList<>();
-            add(list,nums);
-            matrix.add(new ArrayList<>(list));
-        }
+        List<List<Integer>> matrix = new ArrayList<>();
+        List<Integer>list = new ArrayList<>();
+        boolean check[] = new boolean[nums.length];
+        solve(nums,n-1,matrix,list,check);
         return matrix;
-        
+       
     }
-    void nextPermutation(int[] arr) {
-        int pivot = -1;
-        int n = arr.length;
-        for(int i=n-2; i>=0; i--){
-            if(arr[i+1]>arr[i]){
-                pivot = i;
-                break;
+    void solve(int[] arr,int n,List<List<Integer>> matrix,List<Integer>list,boolean check[]){
+        // if(n<0)return;
+        if(list.size()==arr.length){
+            matrix.add(new ArrayList<>(list));
+            return;
+        }
+        for(int i=0; i<arr.length; i=i+1){
+            if(check[i]==false){
+                check[i] = true;
+                list.add(arr[i]);
+                solve(arr,i,matrix,list,check);
+                check[i]=false;
+                list.remove(list.size()-1);
             }
-        }
-        if(pivot == -1)Arrays.sort(arr);
-        else{
-            for(int i=n-1; i>=0; i--){
-                if(arr[i]>arr[pivot]){
-                    int x = arr[pivot];
-                    arr[pivot] = arr[i];
-                    arr[i] = x;
-                    break;
-                }
-            }
-        
-        int i = pivot+1;
-        int j = n-1;
-        while(i<j){
-            int x = arr[j];
-            arr[j] = arr[i];
-            arr[i] = x;
-            i++; j--;
-        }
-        }
-        
-    }
-    
-    void add(List<Integer> list,int[]nums){
-        for(int i=0; i<nums.length; i++){
-            list.add(nums[i]);
-        }
-    }
-    
+            else continue;
+        }   
+    }  
 }
