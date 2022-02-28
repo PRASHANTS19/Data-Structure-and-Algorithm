@@ -3,10 +3,10 @@ class Solution {
          List<String> list = new ArrayList<>();
         int n = arr.length;
         if(n==0)return list;
-        if(n==1){
-         list.add(Integer.toString(arr[0]));
-         return list;
-        }
+        // if(n==1){
+        //  list.add(Integer.toString(arr[0]));
+        //  return list;
+        // }
         String str = Integer.toString(arr[0]);
         for(int i=0; i<n-1; i++ ){
             if(arr[i+1]-arr[i]!=1){
