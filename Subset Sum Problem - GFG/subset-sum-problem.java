@@ -35,27 +35,25 @@ class GFG
 class Solution{
     // static boolean dp[][] = new boolean[1002][1002];
     static Boolean isSubsetSum(int n, int arr[], int k){
-        int dp[][] = new int[n][k+1];
-        for(int x[] : dp){
-            Arrays.fill(x,-1);
-        }
-       return solve(n-1,k,arr,dp);
+        boolean dp[][] = new boolean[n][k+1];
         
-    }
-    
-    static boolean solve(int n,int target,int arr[],int dp[][]){
-        if(target==0)return true;
-        if(n==0)return arr[0]==target;
+       for(int i=0; i<n; i++){
+           dp[i][0]=true;
+       }
+        if(arr[0]<=k)
+            dp[0][arr[0]] = true;
         
-        if(dp[n][target]!=-1)return dp[n][target]==0?false:true;
-        
-        boolean taken=false;
-        boolean nottaken = solve(n-1,target,arr,dp);
-        if(target>=arr[n]){
-            taken = solve(n-1,target-arr[n],arr,dp);
-        }
-        
-        dp[n][target]=taken||nottaken?1:0;
-        return taken||nottaken;
+       for(int ind=1; ind<n; ind++){
+           for(int target=1; target<=k; target++){
+               
+               boolean nottaken = dp[ind-1][target];
+               boolean taken = false;
+               if(arr[ind]<=target){
+                   taken = dp[ind-1][target-arr[ind]];
+               }
+               dp[ind][target]=taken||nottaken;
+           }
+       }
+       return dp[n-1][k];
     }
 }
