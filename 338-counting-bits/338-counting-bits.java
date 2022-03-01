@@ -4,7 +4,14 @@ class Solution {
         
         for(int i=1; i<=n; i++){
             int count = 0;
-            count = Integer.bitCount(i);
+            int j=i;
+            while(j>0){
+                    j = j&(j-1);
+                    count++;
+                }
+            
+            
+            // count = Integer.bitCount(i);
             // int j=i;
             // while(j>0){
             //     count += j&1;
