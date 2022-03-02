@@ -39,20 +39,23 @@ class Solution {
         if(sum%2!=0)return 0;
         
          sum = sum/2;
-         return solve(arr,n-1,sum);
+         
+         int dp[][] = new int[n][sum+1];
+         for(int y[]:dp)Arrays.fill(y,-1);
+         return solve(arr,n-1,sum,dp);
     }
-    static int solve(int arr[],int n,int target){
-        
+    static int solve(int arr[],int n,int target,int dp[][]){
        if(target==0)return 1;
        if(n==0){
            if(arr[0]==target)return 1;
            else return 0;
        }
-       int notpick = solve(arr,n-1,target);
+       if(dp[n][target]!=-1)return dp[n][target];
+       int notpick = solve(arr,n-1,target,dp);
        int pick = 0;
        if(target>=arr[n]){
-           pick = solve(arr,n-1,target-arr[n]);
+           pick = solve(arr,n-1,target-arr[n],dp);
        }
-       return pick+notpick;
+       return  dp[n][target]=pick+notpick;
     }
 }
