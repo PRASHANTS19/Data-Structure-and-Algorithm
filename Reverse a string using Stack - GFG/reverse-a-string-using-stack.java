@@ -25,14 +25,14 @@ class Solution {
            stack.push(s.charAt(i));
        }
        
-    //   StringBuilder res = new StringBuilder();
-    String res = "";
+      StringBuilder res = new StringBuilder();
+    // String res = "";
        
        while(stack.isEmpty()!=true){
-           res += stack.pop();
+           res.append(stack.pop());
        }
        
-       return res;
+       return res.toString();
     }
 
 }
