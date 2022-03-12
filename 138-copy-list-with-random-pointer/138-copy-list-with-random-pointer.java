@@ -19,7 +19,7 @@ class Solution {
         Node temp = head;
         Node nex = head;
         
-        //step1
+        //step1 insert between the nodes
         while(temp!=null){
             nex = temp.next;
             Node dash = new Node(temp.val);
@@ -27,7 +27,7 @@ class Solution {
             dash.next = nex;
             temp = nex;
         }
-        //step2
+        //step2 attach the random
         temp = head;
         while(temp!=null){
             if(temp.random==null)
@@ -37,7 +37,7 @@ class Solution {
             temp = temp.next.next;
         }
         
-        //step3
+        //step3 regain the original linked list and dummy linked list
         temp = head;
         Node ans = new Node(-1);
         Node dummy = ans;
