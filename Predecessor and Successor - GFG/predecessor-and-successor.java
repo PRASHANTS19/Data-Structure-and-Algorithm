@@ -120,26 +120,21 @@ class GfG
 {
     public static void findPreSuc(Node root, Res p, Res s, int key)
     {
-       solve(root,p,s,key);
-
-    }
-    static void solve(Node root, Res p, Res s, int key){
         if(root==null)return;
         
         if(key>root.data){
             p.pre = root;
-            solve(root.right,p,s,key);
+            findPreSuc(root.right,p,s,key);
         }
         else if(key<root.data){
             s.succ = root;
-            solve(root.left,p,s,key);
+            findPreSuc(root.left,p,s,key);
         }
         else{
-            solve(root.left,p,s,key);
-            solve(root.right,p,s,key);
+            findPreSuc(root.left,p,s,key);
+            findPreSuc(root.right,p,s,key);
         }
     }
-    
 }
 
 
