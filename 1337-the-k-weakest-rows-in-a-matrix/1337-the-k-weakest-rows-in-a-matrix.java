@@ -6,10 +6,13 @@ class Solution {
         
         for(int i=0; i<m; i++){
             int c=0;
-            for(int j=0; j<n; j++){
-                if(mat[i][j]==0)break;
-                else c++;
+            int low = 0; int high = n-1;
+            while(low<=high){
+                int mid = low+(high-low)/2;
+                if(mat[i][mid]==1)low=mid+1;
+                else high=mid-1;
             }
+            c=high;
             arr[i] = new pair(i,c);
         }
         Arrays.sort(arr,(p,q)->(p.count-q.count));
