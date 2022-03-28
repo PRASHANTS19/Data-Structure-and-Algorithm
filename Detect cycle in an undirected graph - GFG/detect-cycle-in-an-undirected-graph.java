@@ -33,44 +33,27 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean isCycle(int v, ArrayList<ArrayList<Integer>> adj) {
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean visited[] = new boolean[v];
-        for(int i=0; i<v; i++){
-            if(visited[i]==false)
-                if(cycle(adj,i,visited))return true;
-        }
-        return false;
-    }
-    boolean cycle(ArrayList<ArrayList<Integer>> adj,int start,boolean visited[]){
-        
-        Queue<node> q = new LinkedList<>();
-        q.add(new node(start,-1));
-        visited[start]=true;
-        
-        while(q.isEmpty()!=true){
-            int vis = q.peek().value;
-            int par = q.peek().par;
-            
-            q.remove();
-            
-            for(int u : adj.get(vis)){
-                if(visited[u]==false){
-                    q.add(new node(u,vis));
-                    visited[u] = true;
-                }
-                else if(par!=u)return true; //if it is visited means it will be its parent
+        boolean visited[] = new boolean[V];
+        for(int i=0; i<V; i++){
+            if(visited[i]==false){
+                if(dfs(adj,-1,i,visited))return true;
             }
         }
         return false;
     }
-}
-class node{
-    int value;
-    int par;
     
-    node(int v,int p){
-        value=v;
-        par=p;
+    boolean dfs(ArrayList<ArrayList<Integer>> adj,int parent,int start,boolean visited[]){
+        visited[start]=true;
+        
+        for(Integer u : adj.get(start)){
+            if(visited[u]==false){
+                if(dfs(adj,start,u,visited))return true;
+            }
+            else if(parent!=u)return true;
+        }
+        return false;
+        
     }
 }
