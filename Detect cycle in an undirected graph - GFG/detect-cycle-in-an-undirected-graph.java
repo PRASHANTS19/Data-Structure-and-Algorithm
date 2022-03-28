@@ -33,54 +33,44 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+    public boolean isCycle(int v, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean vis[] = new boolean[V];
-        Arrays.fill(vis,false);
-        int parent[] = new int[V];
-        Arrays.fill(parent,-1);  
-        
-        for(int i=0;i<V;i++)
-            if(vis[i]==false) 
-                if(checkForCycle(adj, i,vis, parent)) 
-                    return true;
-    
+        boolean visited[] = new boolean[v];
+        for(int i=0; i<v; i++){
+            if(visited[i]==false)
+                if(cycle(adj,i,visited))return true;
+        }
         return false;
     }
-    static boolean checkForCycle(ArrayList<ArrayList<Integer>> adj, int s,
-            boolean vis[], int parent[])
-    {
-       Queue<Node> q =  new LinkedList<>(); //BFS
-       q.add(new Node(s, -1));
-       vis[s] =true;
-       
-       while(!q.isEmpty())
-       {
-           int node = q.peek().first;
-           int par = q.peek().second;
-           q.remove(); 
-           
-           for(Integer it: adj.get(node))
-           {
-               if(vis[it]==false)  
-               {
-                   q.add(new Node(it, node));
-                   vis[it] = true; 
-               }
+    boolean cycle(ArrayList<ArrayList<Integer>> adj,int start,boolean visited[]){
         
-               else if(par != it) return true;
-           }
-       }
-       
-       return false;
+        Queue<node> q = new LinkedList<>();
+        q.add(new node(start,-1));
+        visited[start]=true;
+        
+        while(q.isEmpty()!=true){
+            int vis = q.peek().value;
+            int par = q.peek().par;
+            
+            q.remove();
+            
+            for(int u : adj.get(vis)){
+                if(visited[u]==false){
+                    q.add(new node(u,vis));
+                    visited[u] = true;
+                }
+                else if(par!=u)return true; //if it is visited means it will be its parent
+            }
+        }
+        return false;
     }
 }
-class Node{
-    int first;
-    int second;
+class node{
+    int value;
+    int par;
     
-    Node(int v,int p){
-        first=v;
-        second=p;
+    node(int v,int p){
+        value=v;
+        par=p;
     }
 }
