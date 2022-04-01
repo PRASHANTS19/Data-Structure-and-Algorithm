@@ -52,12 +52,12 @@ class Solution
     //Function to find sum of weights of edges of the Minimum Spanning Tree.
     static int spanningTree(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj) 
     {
-        // Add your code here
+        // Prim's algorithm
+        
         PriorityQueue<pair> pq = new PriorityQueue<>((p,q)->(p.weight-q.weight));
         boolean visited[] = new boolean[V];
         boolean vis[] = new boolean[V];
-        // Arrays.fill(res,(int)1e8);
-        
+
         pq.add(new pair(0,0));
         int res = 0;
         
