@@ -60,47 +60,39 @@ class Solution
     //from the source vertex S.
     static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int start)
     {
+        // Write your code here
         int res[] = new int[V];
         Arrays.fill(res,Integer.MAX_VALUE);
-        boolean visited[] = new boolean[V];
-
-        int initCapacity = V;
-        PriorityQueue<pair> pq = new PriorityQueue<>((p,q)->(p.dis-q.dis));
-        
+        PriorityQueue<pair> pq = new PriorityQueue<>((p,q)->(p.weight-q.weight));
         pq.add(new pair(0,start));
-        visited[start]=true;
         res[start]=0;
         
         while(pq.isEmpty()!=true){
-            int vis=pq.peek().val;
-            int dis=pq.peek().dis;
+            int node = pq.peek().val;
+            int weight = pq.peek().weight;
+            
             pq.remove();
             
-            for(ArrayList<Integer>list : adj.get(vis)){
-                int u = list.get(0);
-                int w = list.get(1);
-                if(dis+w<res[u]){
-                    res[u] = dis+w;
-                    pq.add(new pair(dis+w,u));
+            for(ArrayList<Integer>list : adj.get(node)){
+                int val = list.get(0);
+                int dis = list.get(1);
+                
+                if(res[val]>weight+dis){
+                    res[val]=weight+dis;
+                    pq.add(new pair(weight+dis,val));
                 }
             }
         }
         return res;
-    
     }
 }
-class pair  {
-    int dis;
+class pair{
+    int weight;
     int val;
     
-    pair(int d,int v){
-        dis=d;
-        val=v;
+    pair(int w,int v){
+        weight=w;
+        val = v;
+       
     }
-    // pair() {};
-    // public int compareTo(pair n1) 
-    // { 
-    //     return this.dis-n1.dis;
-    // } 
 }
-
