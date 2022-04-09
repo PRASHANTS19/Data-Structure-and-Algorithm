@@ -6,19 +6,25 @@ class Solution {
             map.put(i,map.getOrDefault(i,0)+1);
         }
         
-        PriorityQueue<Map.Entry<Integer,Integer>> pq = new PriorityQueue<>((p,q)->q.getValue()-p.getValue());
+        List<Integer>[]list = new List[arr.length+1];
         
-        for(Map.Entry<Integer,Integer>entry : map.entrySet()){
-            pq.add(entry);
+        for(Map.Entry<Integer,Integer> entry : map.entrySet()){
+            if(list[entry.getValue()]==null){
+                list[entry.getValue()] = new ArrayList<>();
+            }
+            list[entry.getValue()].add(entry.getKey());
         }
         
-        int c =0;
-        int a[] = new int[k];
-        while(!pq.isEmpty()){
-            a[c++] = pq.remove().getKey();
-            if(c==k)break;
+        ArrayList<Integer> l = new ArrayList<>();
+        for(int i=list.length-1; i>=0; i--){
+            if(list[i]!=null){
+                l.addAll(list[i]);
+            }
         }
-        return a;
-        
+        int res[] = new int[k];
+        for(int i=0; i<k; i++){
+            res[i] = l.get(i);   
+        }
+        return res;
     }
 }
