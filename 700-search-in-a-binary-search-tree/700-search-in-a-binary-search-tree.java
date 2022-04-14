@@ -14,15 +14,14 @@
  * }
  */
 class Solution {
-    TreeNode res =new TreeNode(-1);
+    TreeNode res = null;
     public TreeNode searchBST(TreeNode root, int val) {
-        
-        
+
         solve(root,val);
-        if(res.val==-1)return null;
-        return res;
         
+        return res; 
     }
+    
     void solve(TreeNode root, int val){
         if(root == null)return;
         if(root.val==val){
