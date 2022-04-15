@@ -37,35 +37,27 @@ class Solution {
         boolean visited[] = new boolean[V];
         boolean dfsvis[] = new boolean[V];
         
+        
         for(int i=0; i<V; i++){
             if(visited[i]==false){
-                if(dfs(adj,i,visited,dfsvis))return true;
+                if(dfs(i,adj,visited,dfsvis))return true;
             }
+            else if(visited[i]==true && dfsvis[i]==true)return true;
         }
         return false;
+    }
+        
+       boolean dfs( int start,ArrayList<ArrayList<Integer>> adj,boolean visited[],boolean dfsvis[]){
+           visited[start]=true;
+           dfsvis[start]=true;
+           for(int u : adj.get(start)){
+               if(visited[u]==false){    
+                   dfs(u,adj,visited,dfsvis);    
+               }
+               else if(visited[u]==true && dfsvis[u]==true)return true;
+           }
+           dfsvis[start]=false;
+           return false;
+       }
        
     }
-    boolean dfs(ArrayList<ArrayList<Integer>> adj,int start,boolean visited[],boolean[] dfsvis){
-        visited[start]=true;
-        dfsvis[start]=true;
-        
-        for(int u : adj.get(start)){
-            if(visited[u]==false){
-                if(dfs(adj,u,visited,dfsvis))return true;
-            }
-            else if(dfsvis[u]==true)return true;
-        }
-        dfsvis[start]=false;
-        return false;
-    }
-    
-}
-class Node{
-    int first;
-    int second;
-    
-    Node(int f,int s){
-        first = f;
-        second = s;
-    }
-}
