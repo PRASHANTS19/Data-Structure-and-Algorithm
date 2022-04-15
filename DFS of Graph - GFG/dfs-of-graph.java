@@ -39,10 +39,13 @@ class Solution {
     public ArrayList<Integer> dfsOfGraph(int v, ArrayList<ArrayList<Integer>> adj) {
         boolean visited[] = new boolean[v];
         
-        dfs(0,visited,adj);
-        
+        for(int i=0; i<v; i++){
+            if(visited[i]==false)
+                dfs(i,visited,adj);
+        }
         return res;
     }
+    
     void dfs(int start, boolean visited[], ArrayList<ArrayList<Integer>> adj){
         res.add(start);
         visited[start]=true;
