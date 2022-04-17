@@ -27,9 +27,8 @@ class Solution {
         
         solve(root.left);
         
-        child.right = root;
+        child.right =  new TreeNode(root.val);
         child = child.right;
-        root.left=null;
         
         solve(root.right);
     }
