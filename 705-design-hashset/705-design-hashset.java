@@ -1,19 +1,19 @@
 class MyHashSet {
-    HashSet<Integer> q;
+    HashSet<Integer> set;
     public MyHashSet() {
-        q = new HashSet<>();
+        set = new HashSet<>();
     }
     
     public void add(int key) {
-        q.add(key);
+        set.add(key);
     }
     
     public void remove(int key) {
-        q.remove(key);
+        set.remove(key);
     }
     
     public boolean contains(int key) {
-        return q.contains(key);
+        return set.contains(key);
     }
 }
 
