@@ -1,21 +1,50 @@
 class MyHashMap {
-    HashMap<Integer,Integer> map;
+    ArrayList<pair> list;
     public MyHashMap() {
-        map = new HashMap<>();
+        list = new ArrayList<>();
     }
     
     public void put(int key, int value) {
-        map.put(key,value);
+        boolean found = false;
+       for(int i=0; i<list.size(); i++){
+           if(list.get(i).key==key){
+               list.get(i).value = value;
+               found = true;
+           }
+       }
+        if(found == false)list.add(new pair(key,value));
     }
     
     public int get(int key) {
-        if(map.containsKey(key))return map.get(key);
-        else return -1;
+        boolean found = false;
+        for(int i=0; i<list.size(); i++){
+           if(list.get(i).key==key){
+               return list.get(i).value;
+           }
+        }
+        return -1;
     }
     
     public void remove(int key) {
-        map.remove(key);
+        for(int i=0; i<list.size(); i++){
+            if(list.get(i).key==key){
+                list.remove(i);
+                break;
+            }
+        }
     }
+}
+//can use map otherwise use array with class pair
+
+class pair{
+    int key;
+    int value;
+    
+    pair(int k,int v){
+        key = k;
+        value = v;
+    }
+
 }
 
 /**
