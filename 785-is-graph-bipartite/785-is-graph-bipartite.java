@@ -6,30 +6,22 @@ class Solution {
         Arrays.fill(color,-1);
         
         for(int i=0; i<V; i++){
-            if(visited[i]==false)
-                if(bfs(graph,i,visited,color)==false)return false;
+            if(visited[i] == false){
+                color[i]=0;
+                if(dfs(graph,i,visited,color)==false)return false;
+            }
         }
-        
         return true;
     }
-    boolean bfs(int[][] graph,int start,boolean visited[],int color[]){
-        Queue<Integer> q = new LinkedList<>();
-        
-        q.add(start);
+    boolean dfs(int[][] graph,int start,boolean visited[],int color[]){
         visited[start]=true;
-        int c = 0;
-        color[start]=0;
-        while(q.isEmpty()!=true){
-            int vis = q.remove();
-            
-            for(int u:graph[vis]){
-                if(visited[u]==false){
-                    q.add(u);
-                    visited[u]=true;
-                    color[u]=1-color[vis];
-                }
-                else if(color[u]==color[vis])return false;
+        
+        for(int u : graph[start]){
+            if(visited[u]==false){
+                color[u]=1-color[start];
+                if(dfs(graph,u,visited,color)==false)return false;
             }
+            else if(color[u]==color[start])return false;
         }
         return true;
     }
