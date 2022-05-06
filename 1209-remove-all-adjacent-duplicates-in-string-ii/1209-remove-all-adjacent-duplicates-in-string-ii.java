@@ -6,9 +6,7 @@ class Solution {
         for(int i=0; i<s.length(); i++){
             if(stack.isEmpty())stack.push(new pair(s.charAt(i),1));
             else if(s.charAt(i)==stack.peek().ch){
-                int count = stack.peek().count+1;
-                stack.pop();
-                stack.push(new pair(s.charAt(i),count));
+                stack.peek().count++;
             }
             else{
                 stack.push(new pair(s.charAt(i),1));
