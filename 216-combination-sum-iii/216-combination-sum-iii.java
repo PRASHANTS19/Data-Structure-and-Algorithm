@@ -5,7 +5,7 @@ class Solution {
         HashSet<ArrayList<Integer>> set = new HashSet<>();
         if(k>=n)return matrix;
         
-            solve(set, new ArrayList<>(),1,k,n,0);    
+        solve(matrix, new ArrayList<>(),1,k,n,0);    
         
         
         for(ArrayList l : set){
@@ -13,16 +13,16 @@ class Solution {
         }
         return matrix;
     }
-    void solve(HashSet<ArrayList<Integer>> set,List<Integer> list,int i,int k,int n,int sum){
+    void solve(List<List<Integer>> matrix,List<Integer> list,int i,int k,int n,int sum){
          if(sum==n && k==0){
-            set.add(new ArrayList<>(list));
+            matrix.add(new ArrayList<>(list));
             return;
         }
         if(i>9||k<0||sum>n)return;
         
         list.add(i);
-        solve(set,list,i+1,k-1,n,sum+i);
+        solve(matrix,list,i+1,k-1,n,sum+i);
         list.remove(list.size()-1);
-        solve(set,list,i+1,k,n,sum);        
+        solve(matrix,list,i+1,k,n,sum);        
     }
 }
