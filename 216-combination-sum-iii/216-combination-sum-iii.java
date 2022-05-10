@@ -3,10 +3,10 @@ class Solution {
         
         List<List<Integer>> matrix = new ArrayList<>();
         HashSet<ArrayList<Integer>> set = new HashSet<>();
+        if(k>=n)return matrix;
         
-        for(int i=1; i<=9; i++){
-            solve(set, new ArrayList<>(),i,k,n,0);    
-        }
+            solve(set, new ArrayList<>(),1,k,n,0);    
+        
         
         for(ArrayList l : set){
             matrix.add(new ArrayList<>(l));
