@@ -16,44 +16,38 @@
  * }
  */
 public class NestedIterator implements Iterator<Integer> {
-
-    private Queue<Integer> queue = new LinkedList();
+    private Queue<Integer> q = new LinkedList<>();
     
     public NestedIterator(List<NestedInteger> nestedList) {
-            helper(nestedList);
+        solve(nestedList);
     }
-    
-    private void helper(List<NestedInteger> list){
-        if (list == null)
+     
+    void solve(List<NestedInteger> nestedList){
+        if (nestedList == null)
             return;
         
-        for (NestedInteger in: list){
-            if (in.isInteger())
-                queue.offer(in.getInteger());
-            else{
-                helper(in.getList());
+            for(NestedInteger temp : nestedList){
+                if(temp.isInteger()==true){
+                    q.offer(temp.getInteger());
+                }
+                else{
+                    solve(temp.getList());
+                }
             }
-            
-        }
     }
-
+    
     @Override
     public Integer next() {
-        if (hasNext()){
-            return queue.poll();
-        }
-        else
-            return -1;
+        if(hasNext())return q.poll();
+        else return -1;
     }
 
     @Override
     public boolean hasNext() {
-        if (!queue.isEmpty())
-            return true;
-        else
-            return false;
+        return !q.isEmpty();
     }
 }
+
 /**
  * Your NestedIterator object will be instantiated and called as such:
  * NestedIterator i = new NestedIterator(nestedList);
