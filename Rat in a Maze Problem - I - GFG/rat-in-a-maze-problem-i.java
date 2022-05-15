@@ -34,24 +34,29 @@ class Rat {
 // m is the given matrix and n is the order of matrix
 class Solution {
     public static ArrayList<String> findPath(int[][] arr, int n) {
-        ArrayList<String> res = new ArrayList<>();
+        
         boolean visited[][] = new boolean[n][n];
-        solve(arr,0,0,n-1,res,new ArrayList<Character>(),"",visited);
-        Collections.sort(res);
-        return res;
+        ArrayList<String> list = new ArrayList<>();
+        
+        solve(arr,n,0,0,visited,"",list);
+        Collections.sort(list);
+        return list;
+        
     }
-    static void solve(int arr[][],int i,int j,int n,ArrayList<String>res,ArrayList<Character> list,String s,boolean visited[][]){
-        if(i>n || j>n || j<0 || i<0||arr[i][j]==0||visited[i][j]==true)return;
-        if(i==n && j==n){
-            res.add(new String(s));
+    static void solve(int[][] arr,int n,int i,int j,boolean visited[][],String res,ArrayList<String>list){
+        if(i<0 || j<0 || i>=n|| j>=n||arr[i][j]==0||visited[i][j]==true)return;
+        
+        if(i==n-1 && j==n-1){
+            list.add(new String(res));
             return;
         }
-        visited[i][j] = true;
-        solve(arr,i+1,j,n,res,list,s+"D",visited);
-        solve(arr,i-1,j,n,res,list,s+"U",visited);
-        solve(arr,i,j+1,n,res,list,s+"R",visited);
-        solve(arr,i,j-1,n,res,list,s+"L",visited);
-        visited[i][j] = false;
-    }
     
+            visited[i][j]=true;
+            solve(arr,n,i+1,j,visited,res+"D",list);
+            solve(arr,n,i-1,j,visited,res+"U",list);
+            solve(arr,n,i,j+1,visited,res+"R",list);
+            solve(arr,n,i,j-1,visited,res+"L",list);
+            visited[i][j]=false;
+        
+    }
 }
