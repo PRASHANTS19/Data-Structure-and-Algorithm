@@ -1,21 +1,22 @@
 class Solution {
     public boolean isHappy(int n) {
-        
-        int count = 0;
-        
-        while(true){
-            count++;
-            int sum = 0;
-            while(n>0){
+        int fast=giveSquareNumber(n);
+        int slow=n;
+        while(fast!=slow){
+            slow = giveSquareNumber(slow);
+            fast = giveSquareNumber(fast);
+            fast = giveSquareNumber(fast);
+        }
+        if(slow==1)return true;
+        return false;
+    }
+    int giveSquareNumber(int n){
+        int sum = 0;
+        while(n>0){
                 int lastdigit = n%10;
                 n = n/10;
                 sum += lastdigit*lastdigit;    
-            }
-            n=sum;
-            if(sum==1)return true;
-            if(count>10)break;
-            
         }
-        return false;
+        return sum;
     }
 }
