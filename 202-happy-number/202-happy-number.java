@@ -13,7 +13,7 @@ class Solution {
             }
             n=sum;
             if(sum==1)return true;
-            if(count>1000)break;
+            if(count>100)break;
             
         }
         return false;
