@@ -16,6 +16,7 @@ class Solution {
     }
     boolean solve(TreeNode root, TreeNode p, TreeNode q){
         if(root==null)return false;
+        if(res!=null)return true;
         
         boolean left = solve(root.left,p,q);
         boolean right = solve(root.right,p,q);
