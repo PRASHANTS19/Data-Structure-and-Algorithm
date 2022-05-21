@@ -8,21 +8,30 @@
  * }
  */
 class Solution {
+    TreeNode res;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        if(root==null)return null;
-        TreeNode res = new TreeNode(-1);
-        return solve(root,p,q);
+        res = null;
+        solve(root,p, q);
+        return res;
     }
-    TreeNode solve(TreeNode root, TreeNode p, TreeNode q){
-        if(root==null || root==p || root==q)return root;
+    boolean solve(TreeNode root, TreeNode p, TreeNode q){
+        if(root==null)return false;
         
-        //if(root.val==p.val || root.val==q.val)return root;
-                
-        TreeNode left = solve(root.left,p,q);
-        TreeNode right = solve(root.right,p,q);
+        boolean left = solve(root.left,p,q);
+        boolean right = solve(root.right,p,q);
         
-        if(left==null)return right;
-        else if(right==null)return left;
-        return root;
+        if((root==p||root==q)&&(left==true||right==true)){
+             if(res==null){
+                res = root;
+            }
+        }
+        
+        if(root==p || root==q)return true;
+        if(left==true && right==true){
+            if(res==null){
+                res = root;
+            }
+        }
+        return left||right;
     }
 }
