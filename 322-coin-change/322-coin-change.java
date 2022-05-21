@@ -1,26 +1,30 @@
 class Solution {
-    public int coinChange(int[] arr, int x) {
-         int n = arr.length;
-        int dp[][] = new int[n][x+1];
-        for(int d[] : dp)Arrays.fill(d,-1);
+    int dp[][];
+    public int coinChange(int[] arr, int amount) {
+        int n =arr.length;
         
-        int ans= solve(n-1,x,arr,dp);
-        if(ans>=(1e9))return -1;
+        dp = new int[n][amount+1];
+        
+        for(int i=0; i<n; i++){
+            Arrays.fill(dp[i],-1);
+        }
+        
+        int ans = solve(arr,amount,n-1);
+        if(ans>=(int)1e9)return -1;
         return ans;
     }
-	static int solve(int n, int target,int arr[],int dp[][]){
-//         if(target<=0)return (int)1e9;will not add because already cover in pick condition
-        if(n==0){
-            if(target%arr[0]==0)return target/arr[0];
-            else return (int)1e9;
-        }
-        if(dp[n][target]!=-1)return dp[n][target];
+    
+    int solve(int arr[],int amount,int n){
+        if(amount==0)return 0;
+        if(amount<0 || n<0)return (int)1e9;
         
-        int notpick = 0+solve(n-1,target,arr,dp); 
+        if(dp[n][amount]!=-1)return dp[n][amount];
+        
+        int notpick = 0+solve(arr,amount,n-1);
         int pick = (int)1e9;
-        if(target>=arr[n]){
-            pick = 1+solve(n,target-arr[n],arr,dp);
-        }
-        return dp[n][target]=Math.min(pick,notpick);
+        if(amount>=arr[n])
+            pick = 1+solve(arr,amount-arr[n],n);
+        
+        return dp[n][amount]=Math.min(notpick,pick);
     }
 }
