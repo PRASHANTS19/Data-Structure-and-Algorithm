@@ -58,41 +58,34 @@ class Solution
 {
     //Function to find the shortest distance of all the vertices
     //from the source vertex S.
-    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int start)
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int source)
     {
         // Write your code here
-        int res[] = new int[V];
-        Arrays.fill(res,Integer.MAX_VALUE);
-        PriorityQueue<pair> pq = new PriorityQueue<>((p,q)->(p.weight-q.weight));
-        pq.add(new pair(0,start));
-        res[start]=0;
+        int distance[] = new int[V];
+        for(int i=0; i<V; i++)
+            distance[i] = (int)1e9;
+            
+            
+        distance[source] = 0;
+        Queue<Integer> q = new LinkedList<>();
+        q.add(source);
         
-        while(pq.isEmpty()!=true){
-            int node = pq.peek().val;
-            int weight = pq.peek().weight;
-            
-            pq.remove();
-            
-            for(ArrayList<Integer>list : adj.get(node)){
-                int val = list.get(0);
-                int dis = list.get(1);
+        while(q.isEmpty()!=true){
+            int size = q.size();
+            for(int i=0; i<size;i++){
+                int temp = q.remove();
+                int dis = distance[temp];
                 
-                if(res[val]>weight+dis){
-                    res[val]=weight+dis;
-                    pq.add(new pair(weight+dis,val));
+                for(ArrayList<Integer> x : adj.get(temp)){
+                    if(distance[x.get(0)]>dis+x.get(1)){
+                        distance[x.get(0)] = dis+x.get(1);
+                        q.add(x.get(0));
+                    }
+                    else continue;
                 }
             }
         }
-        return res;
+        return distance;
     }
 }
-class pair{
-    int weight;
-    int val;
-    
-    pair(int w,int v){
-        weight=w;
-        val = v;
-       
-    }
-}
+
