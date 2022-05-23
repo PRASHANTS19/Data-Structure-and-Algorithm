@@ -1,13 +1,13 @@
 class Solution {
     int dp[][][];
     public int findMaxForm(String[] arr, int m, int n) {
-        int size = arr.length;
-    Arrays.sort(arr, new Comparator<String>() {
-      @Override
-      public int compare(final String s1, final String s2) {
-        return s1.length() < s2.length() ? -1 : 1;
-      }
-    });
+    int size = arr.length;
+    // Arrays.sort(arr, new Comparator<String>() {
+    //   @Override
+    //   public int compare(final String s1, final String s2) {
+    //     return s1.length() < s2.length() ? -1 : 1;
+    //   }
+    // });
         
     pair arrr[] = new pair[size];
     
