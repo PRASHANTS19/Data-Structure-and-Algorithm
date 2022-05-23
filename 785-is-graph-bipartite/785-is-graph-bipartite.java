@@ -1,27 +1,40 @@
 class Solution {
-    public boolean isBipartite(int[][] graph) {
-        int V = graph.length;
-        boolean visited[] = new boolean[V];
-        int color[] = new int[V];
-        Arrays.fill(color,-1);
+    public boolean isBipartite(int[][] arr) {
+        int m = arr.length;
         
-        for(int i=0; i<V; i++){
-            if(visited[i] == false){
-                color[i]=0;
-                if(dfs(graph,i,visited,color)==false)return false;
+        boolean visited[] = new boolean[m];
+        int color[] = new int[m];
+        
+        for(int i=0; i<m; i++){
+            for(int j=0; j<arr[i].length; j++)
+            {if(visited[arr[i][j]]==false)
+                if(bfs(arr,visited,color,i,j)==false)return false;
             }
         }
         return true;
-    }
-    boolean dfs(int[][] graph,int start,boolean visited[],int color[]){
-        visited[start]=true;
         
-        for(int u : graph[start]){
-            if(visited[u]==false){
-                color[u]=1-color[start];
-                if(dfs(graph,u,visited,color)==false)return false;
+    }
+    boolean bfs(int arr[][],boolean visited[],int color[],int m,int n){
+        Queue<Integer> q = new LinkedList<>();
+        q.add(arr[m][n]);
+        color[arr[m][n]] = 1;
+        visited[arr[m][n]]=true;
+        
+        while(q.isEmpty()!=true){
+            int size = q.size();
+            for(int i=0; i<size; i++){
+                int temp = q.remove();
+                for(int x : arr[temp]){
+                    if(visited[x]==false){
+                        q.add(x);
+                        color[x]=1-color[temp];
+                        visited[x]=true;
+                    }
+                    else{
+                        if(color[x]==color[temp])return false;
+                    }
+                }
             }
-            else if(color[u]==color[start])return false;
         }
         return true;
     }
