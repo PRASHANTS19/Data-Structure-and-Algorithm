@@ -110,24 +110,15 @@ class Solution
 {
 	ArrayList <Integer> boundary(Node node)
 	{
-	   ArrayList<Integer> left = new ArrayList<>();
-	    Stack<Integer>right = new Stack<>();
-	   ArrayList<Integer> bottom = new ArrayList<>();
-	  
-	   left.add(node.data);  
-	   
-	   leftTree(node.left,left);
-	   bottomTree(node.left,bottom);
-	   bottomTree(node.right,bottom);
-	   rightTree(node.right,right);
-	   
 	   ArrayList<Integer> res = new ArrayList<>();
+	    
+	   res.add(node.data);  
 	   
-	   for(int x : left)res.add(x);
-	   for(int x : bottom)res.add(x);
+	   leftTree(node.left,res);
+	   bottomTree(node.left,res);
+	   bottomTree(node.right,res);
+	   rightTree(node.right,res);
 	   
-	   while(right.isEmpty()!=true)
-	        res.add(right.pop());
 	   
 	   return res;
 	   
@@ -141,15 +132,16 @@ class Solution
 	    bottomTree(root.right,bottom);
 	}
 	
-	void rightTree(Node root,Stack<Integer> right){
+	void rightTree(Node root,ArrayList<Integer> right){
 	    if(root==null)return;
 	    if(root.left==null && root.right==null)return;
 	    
-	    right.push(root.data);
         if(root.right!=null)
 	        rightTree(root.right,right);
 	   else
 	        rightTree(root.left,right);
+	   
+	   right.add(root.data);
 	}
 	
 	void leftTree(Node root,ArrayList<Integer> left){
