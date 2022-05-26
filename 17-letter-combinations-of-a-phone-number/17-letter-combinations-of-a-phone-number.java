@@ -1,18 +1,26 @@
 class Solution {
-    // ArrayList<String>list;
     public List<String> letterCombinations(String digits) {
-		LinkedList<String> ans = new LinkedList<String>();
-		if(digits.isEmpty()) return ans;
-		String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-		ans.add("");
-		for(int i =0; i<digits.length();i++){
-			int x = Character.getNumericValue(digits.charAt(i));
-			while(ans.peek().length()==i){
-				String t = ans.remove();
-				for(char s : mapping[x].toCharArray())
-					ans.add(t+s);
-			}
-		}
-		return ans;
-	}
+        List<String>list = new ArrayList<>();
+        if(digits.length()==0)return list;
+        
+        String arr[] = {"0","1","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+        
+        
+        solve(arr,digits,0,new StringBuilder(),list);
+        return list;
+        
+    }
+    void solve(String arr[],String digits,int i,StringBuilder res,List<String> list){
+        if(i==digits.length()){
+            list.add(res.toString());
+            return;
+        }
+        
+        String curr =  arr[Integer.parseInt(digits.charAt(i)+"")];
+        for(int j=0; j<curr.length(); j++){
+            res.append(curr.charAt(j));
+            solve(arr,digits,i+1,res,list);
+            res.deleteCharAt(res.length()-1);
+        }
+    }
 }
