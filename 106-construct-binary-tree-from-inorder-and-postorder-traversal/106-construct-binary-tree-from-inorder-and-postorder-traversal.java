@@ -16,25 +16,29 @@
 class Solution {
     public TreeNode buildTree(int[] inorder, int[] postorder) {
         HashMap<Integer,Integer> inmap = new HashMap<>();
-        
         for(int i=0; i<inorder.length; i++){
             inmap.put(inorder[i],i);
         }
-        int n=inorder.length;
-        return buildtree(postorder,n-1,0,inorder,0,n-1,inmap);
-        
+        return solve(postorder,0,postorder.length-1,inorder,0,inorder.length-1,inmap);
     }
-    TreeNode buildtree(int[]po,int poststart,int postend,int[]in,int instart,int inend,HashMap<Integer,Integer>inmap){
-        if(postend>poststart || instart>inend)return null;
+    TreeNode solve(int[] post,int pstart,int pend,int[] in,int instart,int inend,HashMap<Integer,Integer>inmap){
+      if(pstart>pend || instart>inend)return null;
         
-        TreeNode root = new TreeNode(po[poststart]);
-        int inroot = inmap.get(root.val);
-        int numleft = inend-inroot;
+        TreeNode root = new TreeNode(post[pend]);
         
-        root.right = buildtree(po,poststart-1,poststart-numleft,in,inroot+1,inend,inmap);
-        root.left = buildtree(po,poststart-numleft-1,postend,in,instart,inroot-1,inmap);
+        int in_index = inmap.get(post[pend]);
+        int numleft = inend-in_index;
+        
+        root.right = solve(post,pend-numleft,pend-1,in,in_index+1,in_index+numleft,inmap);
+        root.left = solve(post,pstart,pend-numleft-1,in,instart,in_index-1,inmap);
+        
         
         return root;
         
     }
 }
+
+
+
+
+
