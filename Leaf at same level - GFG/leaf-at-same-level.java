@@ -108,18 +108,20 @@ class Solution
 {
     boolean check(Node root)
     {
-	    HashSet<Integer> set = new HashSet<>();
+	   // HashSet<Integer> set = new HashSet<>();
 	    Queue<Node> q = new LinkedList<>();
 	    q.add(root);
 	    int level = 1;
+	    
+	    int prevlevel = -1;
 	    
 	    while(q.isEmpty()!=true){
 	        int size = q.size();
 	        for(int i=0; i<size; i++){
 	            Node temp = q.remove();
 	            if(temp.left==null && temp.right==null){
-	                if(set.size()==0)set.add(level);
-	                else if(set.add(level))return false;
+	                if(prevlevel==-1)prevlevel = level;
+	                else if(prevlevel!=level)return false;
 	            }
 	            if(temp.left!=null)q.add(temp.left);
 	            if(temp.right!=null)q.add(temp.right);
