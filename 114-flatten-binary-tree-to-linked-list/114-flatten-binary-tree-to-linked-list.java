@@ -24,7 +24,8 @@ class Solution {
         solve(root.right);
         solve(root.left);
         root.right = child;
-        root.left = null;
-        child = root;    
+        root.left=null;
+        child = root;
+        
     }
 }
