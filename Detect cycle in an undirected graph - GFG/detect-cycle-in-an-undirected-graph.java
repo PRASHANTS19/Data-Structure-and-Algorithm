@@ -37,14 +37,13 @@ class Solution {
         // Code here
         boolean visited[] = new boolean[V];
         for(int i=0; i<V; i++){
-            if(visited[i]==false){
+            if(visited[i]==false)
                 if(dfs(adj,-1,i,visited))return true;
-            }
+                
         }
         return false;
     }
-    
-    boolean dfs(ArrayList<ArrayList<Integer>> adj,int parent,int start,boolean visited[]){
+  boolean dfs(ArrayList<ArrayList<Integer>> adj,int parent,int start,boolean visited[]){
         visited[start]=true;
         
         for(Integer u : adj.get(start)){
