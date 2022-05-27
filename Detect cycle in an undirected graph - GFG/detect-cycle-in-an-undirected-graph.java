@@ -38,21 +38,21 @@ class Solution {
         boolean visited[] = new boolean[V];
         for(int i=0; i<V; i++){
             if(visited[i]==false)
-                if(dfs(adj,-1,i,visited))return true;
+                if(solve(adj,i,-1,visited))return true;
                 
         }
         return false;
     }
-  boolean dfs(ArrayList<ArrayList<Integer>> adj,int parent,int start,boolean visited[]){
+    boolean solve(ArrayList<ArrayList<Integer>> adj,int start,int parent,boolean visited[]){
         visited[start]=true;
         
-        for(Integer u : adj.get(start)){
-            if(visited[u]==false){
-                if(dfs(adj,start,u,visited))return true;
+        for(int x : adj.get(start)){
+            if(visited[x]==false){
+                if(solve(adj,x,start,visited))
+                    return true;   
             }
-            else if(parent!=u)return true;
+            else if(visited[x]==true && x!=parent)return true;
         }
         return false;
-        
     }
 }
