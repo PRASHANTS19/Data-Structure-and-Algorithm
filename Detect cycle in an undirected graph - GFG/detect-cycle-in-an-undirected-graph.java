@@ -33,26 +33,54 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+   public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean visited[] = new boolean[V];
-        for(int i=0; i<V; i++){
-            if(visited[i]==false)
-                if(solve(adj,i,-1,visited))return true;
-                
-        }
+        boolean vis[] = new boolean[V];
+        Arrays.fill(vis,false);
+        int parent[] = new int[V];
+        Arrays.fill(parent,-1);  
+        
+        for(int i=0;i<V;i++)
+            if(vis[i]==false) 
+                if(checkForCycle(adj, i,vis, parent)) 
+                    return true;
+    
         return false;
     }
-    boolean solve(ArrayList<ArrayList<Integer>> adj,int start,int parent,boolean visited[]){
-        visited[start]=true;
+    static boolean checkForCycle(ArrayList<ArrayList<Integer>> adj, int s,
+            boolean vis[], int parent[])
+    {
+       Queue<Node> q =  new LinkedList<>(); //BFS
+       q.add(new Node(s, -1));
+       vis[s] =true;
+       
+       while(!q.isEmpty())
+       {
+           int node = q.peek().first;
+           int par = q.peek().second;
+           q.remove(); 
+           
+           for(Integer it: adj.get(node))
+           {
+               if(vis[it]==false)  
+               {
+                   q.add(new Node(it, node));
+                   vis[it] = true; 
+               }
         
-        for(int x : adj.get(start)){
-            if(visited[x]==false){
-                if(solve(adj,x,start,visited))
-                    return true;   
-            }
-            else if(visited[x]==true && x!=parent)return true;
-        }
-        return false;
+               else if(par != it) return true;
+           }
+       }
+       
+       return false;
+    }
+}
+class Node{
+    int first;
+    int second;
+    
+    Node(int v,int p){
+        first=v;
+        second=p;
     }
 }
