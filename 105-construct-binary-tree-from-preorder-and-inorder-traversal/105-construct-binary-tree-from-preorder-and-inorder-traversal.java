@@ -25,15 +25,15 @@ class Solution {
         return solve(preorder,0,n-1,inorder,0,n-1,inmap);
         
     }
-    TreeNode solve(int preorder[],int pstart,int pend,int inorder[],int istart,int iend,HashMap<Integer,Integer>inmap){
-        if(istart>iend || pstart>pend)return null;
+    TreeNode solve(int[]pre,int prestart,int preend,int[]in,int instart,int inend,HashMap<Integer,Integer> inmap){
+        if(prestart>preend||instart>inend)return null;
         
-        TreeNode root = new TreeNode(preorder[pstart]);
-        int in_index = inmap.get(root.val);
-        int numleft = in_index-istart;
+        TreeNode root = new TreeNode(pre[prestart]);
+        int in_index =inmap.get(pre[prestart]);
+        int numleft = in_index-instart;
         
-        root.left= solve(preorder,pstart+1,pstart+numleft,inorder,istart,in_index-1,inmap);
-        root.right = solve(preorder,pstart+numleft+1,pend,inorder,in_index+1,iend,inmap);
+        root.left = solve(pre,prestart+1,prestart+numleft,in,instart,in_index-1,inmap);
+        root.right = solve(pre,prestart+numleft+1,preend,in,in_index+1,inend,inmap);
         
         return root;
     }
