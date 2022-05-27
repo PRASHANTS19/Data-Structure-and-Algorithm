@@ -34,30 +34,36 @@ class Solution {
     // Function to detect cycle in a directed graph.
     public boolean isCyclic(int V, ArrayList<ArrayList<Integer>> adj) {
         // code here
-        boolean visited[] = new boolean[V];
-        boolean dfsvis[] = new boolean[V];
-        
+        int indegree[] = new int[V];
         
         for(int i=0; i<V; i++){
-            if(visited[i]==false){
-                if(dfs(i,adj,visited,dfsvis))return true;
+            for(int x : adj.get(i)){
+                indegree[x]++;
             }
-            else if(visited[i]==true && dfsvis[i]==true)return true;
         }
-        return false;
-    }
+        Queue<Integer> q = new LinkedList<>();
+        for(int i=0; i<V; i++){
+            if(indegree[i]==0)
+                q.add(i);
+        }
+        int count = 0;
+        boolean visited[] = new boolean[V];
+        while(q.isEmpty()!=true){
+            int size = q.size();
+            count++;
+            for(int i=0; i<size; i++){
+                int temp =q.remove();
+                visited[temp]=true;
+                for(int x : adj.get(temp)){
+                    indegree[x]--;
+                    if(indegree[x]==0 && visited[x]==false)
+                        q.add(x);
+                }
+            }
+        }
+        if(count==V)return false;
+        return true;
         
-       boolean dfs( int start,ArrayList<ArrayList<Integer>> adj,boolean visited[],boolean dfsvis[]){
-           visited[start]=true;
-           dfsvis[start]=true;
-           for(int u : adj.get(start)){
-               if(visited[u]==false){    
-                   dfs(u,adj,visited,dfsvis);    
-               }
-               else if(visited[u]==true && dfsvis[u]==true)return true;
-           }
-           dfsvis[start]=false;
-           return false;
-       }
-       
+        
     }
+}
