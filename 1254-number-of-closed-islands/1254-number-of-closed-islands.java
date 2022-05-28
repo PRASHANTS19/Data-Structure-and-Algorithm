@@ -1,9 +1,8 @@
 class Solution {
-    boolean visited[][];
     public int closedIsland(int[][] arr) {
         int m  = arr.length;
         int n = arr[0].length;
-        visited= new boolean[m][n];
+        boolean visited[][] = new boolean[m][n];
         int ans = 0;
         for(int i=0; i<m; i++){
             for(int j=0; j<n; j++){
