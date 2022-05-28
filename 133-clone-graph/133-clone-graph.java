@@ -21,13 +21,10 @@ class Node {
 class Solution {
     public Node cloneGraph(Node node) {
         if(node==null)return node;
-        boolean visited[] = new boolean[110];
-        Queue<Node> q = new LinkedList<>();
-        q.add(node);
-        visited[node.val]=true;
-        
         HashMap<Integer,Node> map = new HashMap<>();
-        map.put(node.val,new Node(node.val));
+        Queue<Node> q =new LinkedList<>();
+        q.add(node);
+        map.put(node.val, new Node(node.val));
         
         while(q.isEmpty()!=true){
             int size = q.size();
@@ -35,8 +32,8 @@ class Solution {
                 Node temp = q.remove();
                 
                 for(Node x : temp.neighbors){
-                    if(map.containsKey(x.val)!=true){
-                        map.put(x.val,new Node(x.val, new ArrayList<Node>()));
+                    if(map.containsKey(x.val)==false){
+                        map.put(x.val,new Node(x.val));
                         q.add(x);
                     }
                     map.get(temp.val).neighbors.add(map.get(x.val));
