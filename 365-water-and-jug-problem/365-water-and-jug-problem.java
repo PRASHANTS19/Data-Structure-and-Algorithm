@@ -12,7 +12,7 @@ class Solution {
         
         while(q.isEmpty()!=true){
             int size = q.size();
-            
+            for(int i=0; i<size; i++){
                 int temp = q.remove();
                 if(temp==targetCapacity)return true;
                 
@@ -24,7 +24,7 @@ class Solution {
                     q.add(temp-j1);
                 if((temp-j2)>=0 && set.add(temp-j2)==true)
                     q.add(temp-j1);
-            
+            }
         }
         return false;
         
