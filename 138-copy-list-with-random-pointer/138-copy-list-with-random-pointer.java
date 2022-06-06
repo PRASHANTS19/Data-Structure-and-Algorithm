@@ -15,22 +15,37 @@ class Node {
 
 class Solution {
     public Node copyRandomList(Node head) {
-        HashMap<Node,Node> map = new HashMap<>();
+        if(head==null)return null;
+        //first Insert a copy in the list, here random is not there hence we first insert all copy node
         Node temp = head;
+        Node next = head;
+        
         while(temp!=null){
-            map.put(temp,new Node(temp.val));
-            temp = temp.next;
+            next = temp.next;
+            Node dummy = new Node(temp.val);
+            temp.next = dummy;
+            dummy.next = next;
+            temp = next;
         }
+        
+        //now point random to all dummy nodes.
         temp = head;
         while(temp!=null){
-            if(temp.next!=null){
-                map.get(temp).next = map.get(temp.next);
-            }
-            if(temp.random!=null){
-                map.get(temp).random = map.get(temp.random);
-            }
-            temp = temp.next;
+            if(temp.random!=null)
+                temp.next.random = temp.random.next;
+            temp = temp.next.next;
         }
-        return map.get(head);
+        
+        //retrive dummy linklist by removing original nodes
+        temp = head;
+        Node ans = new Node(-1);
+        Node dummy = ans;
+        while(temp!=null){
+            dummy.next = temp.next;
+            temp.next = temp.next.next;
+            temp = temp.next;
+            dummy = dummy.next;
+        }
+        return ans.next;
     }
 }
