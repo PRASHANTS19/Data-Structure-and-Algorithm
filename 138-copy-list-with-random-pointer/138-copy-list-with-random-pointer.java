@@ -15,39 +15,22 @@ class Node {
 
 class Solution {
     public Node copyRandomList(Node head) {
-        
+        HashMap<Node,Node> map = new HashMap<>();
         Node temp = head;
-        Node nex = head;
-        
-        //step1 insert between the nodes
         while(temp!=null){
-            nex = temp.next;
-            Node dash = new Node(temp.val);
-            temp.next = dash;
-            dash.next = nex;
-            temp = nex;
-        }
-        //step2 attach the random
-        temp = head;
-        while(temp!=null){
-            if(temp.random==null)
-                temp.next.random = null;
-            else
-                temp.next.random = temp.random.next;
-            temp = temp.next.next;
-        }
-        
-        //step3 regain the original linked list and dummy linked list
-        temp = head;
-        Node ans = new Node(-1);
-        Node dummy = ans;
-        while(temp!=null){
-            dummy.next = temp.next;
-            temp.next = temp.next.next;
+            map.put(temp,new Node(temp.val));
             temp = temp.next;
-            dummy = dummy.next;
         }
-        return ans.next;
-        
+        temp = head;
+        while(temp!=null){
+            if(temp.next!=null){
+                map.get(temp).next = map.get(temp.next);
+            }
+            if(temp.random!=null){
+                map.get(temp).random = map.get(temp.random);
+            }
+            temp = temp.next;
+        }
+        return map.get(head);
     }
 }
