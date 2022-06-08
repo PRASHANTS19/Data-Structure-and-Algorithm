@@ -1,16 +1,20 @@
 class Solution {
     public int climbStairs(int n) {
-       long dp[] = new long[n+1];
+     
+       int dp[] = new int[n+1];
         Arrays.fill(dp,-1);
-        return (int)solve(dp,(int)n);
-	}
-    static long solve(long dp[],int n){
+        return solve(n,dp);
+    }
+    
+    int solve(int n,int dp[]){
+        if(n==0)return 1;
         if(n<0)return 0;
-        if(n==0 || n==1)return 1;
+        
         if(dp[n]!=-1)return dp[n];
         
-        dp[n] = solve(dp,n-1) + solve(dp,n-2);
+        int one = solve(n-1,dp);
+        int two = solve(n-2,dp);
         
-        return dp[n];
+        return dp[n]=(one+two);
     }
 }
