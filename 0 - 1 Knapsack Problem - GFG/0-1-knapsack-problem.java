@@ -52,13 +52,26 @@ class Solution
     static int knapSack(int W, int wt[], int val[], int n) 
     { 
          // your code here
-         dp = new int[W+1][n];
+         dp = new int[n][W+1];
          
-         for(int i=0; i<W+1; i++){
-             Arrays.fill(dp[i],-1);
+         for(int i=wt[0]; i<=W; i++){
+             dp[0][i] = val[0];
          }
          
-         return solve(val,wt,W,n-1);
+         for(int ind=1; ind<n; ind++){
+             for(int cap=0; cap<=W; cap++){
+                 
+                 int notselect = 0+dp[ind-1][cap];
+                 int select = 0;
+                    
+                 if(wt[ind]<=cap){
+                    select = val[ind]+dp[ind-1][cap-wt[ind]];
+                }
+                dp[ind][cap] = Math.max(select,notselect);
+             }
+         }
+         
+         return dp[n-1][W];
          
      
         
