@@ -35,7 +35,7 @@ class Solution{
     int solve(int arr[],int size,int ind){
         
         if(ind==0){
-            return size*arr[0];
+            return (size/(ind+1))*arr[0];
         }
         if(dp[ind][size]!=-1)return dp[ind][size];
         
