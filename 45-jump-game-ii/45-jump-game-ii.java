@@ -1,17 +1,20 @@
 class Solution {
+    int dp[];
     public int jump(int[] arr) {
         int n = arr.length;
-        int maxreach = 0;
-        int curreach = 0;
-        int jump = 0;
-        for(int i=0; i<n-1; i++ ){
-            maxreach = Math.max(maxreach , arr[i]+i);
-            if(i==curreach){
-                jump++;
-                curreach = maxreach;
-            }
-            
+        dp = new int[n];
+        Arrays.fill(dp,-1);
+        return solve(arr,0);
+    }
+    int solve(int arr[],int ind){
+        if(ind>=arr.length-1)return 0;
+        
+        if(dp[ind]!=-1)return dp[ind];
+        int ans = (int)1e9;
+        for(int i=arr[ind]; i>0; i--){
+            ans = Math.min(ans,1+solve(arr,ind+i));
         }
-        return jump;
+        
+        return dp[ind]=ans;
     }
 }
