@@ -1,31 +1,30 @@
 class Solution {
-    public int minFallingPathSum(int[][] matrix) {
+    int dp[][];
+    public int minFallingPathSum(int[][] arr) {
+        int n= arr.length;
+        dp = new int[n][n];
         
-        int m = matrix.length;
-        int n = m;
-        int dp[][] = new int[m][n];
-        
-        for(int x[] : dp){
-            Arrays.fill(x,Integer.MAX_VALUE);
+        for(int i=0; i<n; i++){
+            Arrays.fill(dp[i],Integer.MAX_VALUE);
         }
-        int res = Integer.MAX_VALUE;
-        for(int i=n-1; i>=0; i--){
-            res = Math.min(res,solve(matrix,m-1,i,dp));
+        int ans = (int)1e9;
+        for(int i=0; i<n; i++){
+            ans = Math.min(ans,solve(arr,n,0,i));
         }
+        return ans;
         
-        return res;
         
     }
-    int solve(int arr[][],int m,int n,int[][] dp){
-        if(m==0 && n>=0 && n<arr[m].length)return arr[m][n];
-        if(m<0 || n<0 || n>=arr[m].length)return Integer.MAX_VALUE;
+    int solve(int arr[][],int n,int i,int j){
+        if(i<0||j<0||i>n-1||j>n-1)return (int)1e9;
+        if(i==n-1){
+            return arr[i][j];
+        }
+        if(dp[i][j]!=Integer.MAX_VALUE)return dp[i][j];
+        int x = solve(arr,n,i+1,j);
+        int y = solve(arr,n,i+1,j+1);
+        int z = solve(arr,n,i+1,j-1);
         
-        if(dp[m][n]!=Integer.MAX_VALUE)return dp[m][n];
-        
-        int x1 = solve(arr,m-1,n,dp);
-        int x2 = solve(arr,m-1,n-1,dp);
-        int x3 = solve(arr,m-1,n+1,dp);
-        
-        return dp[m][n]=arr[m][n]+Math.min(Math.min(x1,x2),x3);
+        return dp[i][j]=arr[i][j]+Math.min(Math.min(x,y),z);
     }
 }
