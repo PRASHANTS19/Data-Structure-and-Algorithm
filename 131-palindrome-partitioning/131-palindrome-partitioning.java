@@ -1,31 +1,33 @@
 class Solution {
     public List<List<String>> partition(String s) {
-        
         List<List<String>>matrix = new ArrayList<>();
-        solve(s,0,new ArrayList<>(),matrix);
+        
+        solve(0,s.length(),s,matrix,new ArrayList<>());
         return matrix;
         
     }
-    void solve(String str,int index,List<String> list, List<List<String>>matrix){
-        if(index==str.length()){
+    void solve(int i,int n,String str,List<List<String>>matrix, List<String>list){
+        
+        if(i==n){
             matrix.add(new ArrayList<>(list));
             return;
         }
-        for(int i=index; i<str.length(); ++i){
-            if(isPalindrome(str,index,i)){
-                list.add(str.substring(index,i+1));
-                solve(str,i+1,list,matrix);
+        
+        for(int j=i; j<n; j++){
+            if(pal(str,i,j)){
+                list.add(str.substring(i,j+1));
+                solve(j+1,n,str,matrix,list);
                 list.remove(list.size()-1);
             }
         }
     }
-    public static boolean isPalindrome(String str,int start,int end){  
-        while(start<end){
-            if(str.charAt(start)==str.charAt(end)){
-                start++;end--;
-            }
-            else return false;
+    boolean pal(String str, int i,int j){
+        
+        while(i<j){
+            if(str.charAt(i)!=str.charAt(j))return false;
+            i++;
+            j--;
         }
         return true;
-    }  
+    }
 }
