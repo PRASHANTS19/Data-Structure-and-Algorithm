@@ -18,9 +18,9 @@ class Solution {
         
         if(dp[start]!=-1)return dp[start];
         
-        String sub = s.substring(start,start+2);
         int one = solve(s,start+1,set);
         int two = 0;
+        String sub = s.substring(start,start+2);
         if(set.contains(sub)){
             two = solve(s,start+2,set);
         }
