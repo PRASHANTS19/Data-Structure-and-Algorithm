@@ -1,23 +1,23 @@
 class Solution {
+    List<List<Integer>> matrix;
     public List<List<Integer>> combinationSum(int[] arr, int target) {
-        List<List<Integer>>matrix = new ArrayList<>();
-        Arrays.sort(arr);
-        solve(arr,0,0,target,new ArrayList<>(),matrix);
+        matrix = new ArrayList<>();
+        int n = arr.length;
+        solve(arr,n-1,target,new ArrayList<>());
         return matrix;
-        
     }
-    void solve(int arr[],int i,int sum,int target,List<Integer> list,List<List<Integer>>matrix){
-        if(sum==target){
+    void solve(int arr[],int n, int target,List<Integer> list){
+        if(target==0){
             matrix.add(new ArrayList<>(list));
             return;
         }
-        if(sum<0 || i==arr.length)return;
-        if(sum<=target){
-            list.add(arr[i]);
-            solve(arr,i,sum+arr[i],target,list,matrix);
+        if(n<0||target<0)return;
+        
+        solve(arr,n-1,target,list);
+        if(arr[n]<=target){
+            list.add(arr[n]);
+            solve(arr,n,target-arr[n],list);
             list.remove(list.size()-1);
-            solve(arr,i+1,sum,target,list,matrix);
-            
         }
     }
 }
