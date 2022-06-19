@@ -1,30 +1,28 @@
 class Solution {
-    public List<List<Integer>> permute(int[] nums) {
-        if (nums == null || nums.length == 0)
-            return new ArrayList<>();
-        int n = nums.length;
-        List<List<Integer>> matrix = new ArrayList<>();
-        List<Integer>list = new ArrayList<>();
-        boolean check[] = new boolean[nums.length];
-        solve(nums,n-1,matrix,list,check);
+    List<List<Integer>>matrix;
+    public List<List<Integer>> permute(int[] arr) {
+        matrix = new ArrayList<>();
+        int n = arr.length;
+        boolean select[] = new boolean[n];
+        solve(n-1,arr,select,new ArrayList<>());
+        
         return matrix;
-       
     }
-    void solve(int[] arr,int n,List<List<Integer>> matrix,List<Integer>list,boolean check[]){
-        // if(n<0)return;
-        if(list.size()==arr.length){
+    void solve(int n,int arr[],boolean[] select,List<Integer>list){
+        
+        if(list.size()==arr.length || n<0){
             matrix.add(new ArrayList<>(list));
             return;
         }
-        for(int i=0; i<arr.length; i=i+1){
-            if(check[i]==false){
-                check[i] = true;
+        
+        for(int i=arr.length-1; i>=0; i--){
+            if(select[i]==false){
+                select[i]=true;
                 list.add(arr[i]);
-                solve(arr,i,matrix,list,check);
-                check[i]=false;
+                solve(n-1,arr,select,list);
                 list.remove(list.size()-1);
+                select[i]=false;
             }
-            else continue;
-        }   
-    }  
+        }
+    }
 }
