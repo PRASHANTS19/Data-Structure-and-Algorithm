@@ -1,12 +1,7 @@
 class Solution {
     public int[][] reconstructQueue(int[][] arr) {
         
-          Arrays.sort(arr, new Comparator<int[]>() {
-            public int compare(int[] a, int[] b) {
-                if (b[0] == a[0]) return a[1] - b[1];
-                return b[0] - a[0];
-            }
-        });
+        Arrays.sort(arr, (a, b) -> (b[0] == a[0] ? a[1] - b[1] : b[0] - a[0]));
         ArrayList<ArrayList<Integer>> list = new ArrayList<>();
         
         for(int i=0; i<arr.length; i++){
