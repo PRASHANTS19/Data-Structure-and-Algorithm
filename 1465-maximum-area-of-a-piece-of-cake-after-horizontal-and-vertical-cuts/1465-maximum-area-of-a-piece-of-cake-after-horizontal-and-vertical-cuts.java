@@ -1,22 +1,21 @@
 class Solution {
-    public int maxArea(int h, int w, int[] horizontalCuts, int[] verticalCuts) {
-        Arrays.sort(horizontalCuts);
-    Arrays.sort(verticalCuts);
-    
-    long maxWidth = horizontalCuts[0] - 0;
-    long maxHeight = verticalCuts[0] - 0;
-    
-    for(int i = 1 ; i < horizontalCuts.length ; i++) {
-        maxWidth = Math.max(maxWidth,horizontalCuts[i]-horizontalCuts[i-1]);
-    }
-    
-    for(int i = 1 ; i < verticalCuts.length ; i++) {
-        maxHeight = Math.max(maxHeight,verticalCuts[i]-verticalCuts[i-1]);
-    }
-    
-    maxWidth = Math.max(maxWidth,h-horizontalCuts[horizontalCuts.length-1]);
-    maxHeight = Math.max(maxHeight,w-verticalCuts[verticalCuts.length-1]);
-    
-    return (int) (maxWidth * maxHeight % 1000000007);
+    int modulo = (int)1e9+7;
+    public int maxArea(int h, int w, int[] horizontal, int[] vertical) {
+        Arrays.sort(horizontal);
+        Arrays.sort(vertical);
+        
+        long x = horizontal[0]-0;
+        for(int i=1; i<horizontal.length; i++){
+            x = Math.max(x, horizontal[i]-horizontal[i-1]);
+        }
+        x = Math.max(x, h-horizontal[horizontal.length-1]);
+        
+        long y = vertical[0]-0;
+        for(int i=1; i<vertical.length; i++){
+            y = Math.max(y, vertical[i]-vertical[i-1]);
+        }
+        y = Math.max(y, w-vertical[vertical.length-1]);
+        
+        return (int)(x*y%1000000007);
     }
 }
