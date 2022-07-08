@@ -33,54 +33,48 @@ class GFG {
 
 class Solution {
     // Function to detect cycle in an undirected graph.
-   public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {
         // Code here
-        boolean vis[] = new boolean[V];
-        Arrays.fill(vis,false);
-        int parent[] = new int[V];
-        Arrays.fill(parent,-1);  
+        boolean visited[] = new boolean[V];
         
-        for(int i=0;i<V;i++)
-            if(vis[i]==false) 
-                if(checkForCycle(adj, i,vis, parent)) 
+        for(int i=0; i<V; i++){
+            if(visited[i]==false){
+                if(cycle(i,visited,adj))
                     return true;
-    
+            }
+        }
         return false;
     }
-    static boolean checkForCycle(ArrayList<ArrayList<Integer>> adj, int s,
-            boolean vis[], int parent[])
-    {
-       Queue<Node> q =  new LinkedList<>(); //BFS
-       q.add(new Node(s, -1));
-       vis[s] =true;
-       
-       while(!q.isEmpty())
-       {
-           int node = q.peek().first;
-           int par = q.peek().second;
-           q.remove(); 
-           
-           for(Integer it: adj.get(node))
-           {
-               if(vis[it]==false)  
-               {
-                   q.add(new Node(it, node));
-                   vis[it] = true; 
-               }
-        
-               else if(par != it) return true;
-           }
-       }
-       
-       return false;
-    }
-}
-class Node{
-    int first;
-    int second;
     
-    Node(int v,int p){
-        first=v;
-        second=p;
+    boolean cycle(int node,boolean visited[],ArrayList<ArrayList<Integer>> adj){
+        Queue<pair> q = new LinkedList<>();
+        q.add(new pair(node,-1));
+        visited[node]=true;
+        while(q.isEmpty()!=true){
+            int size = q.size();
+            for(int i=0; i<size; i++){
+                int value = q.peek().value;
+                int parent = q.peek().parent;
+                q.remove();
+                for(int temp : adj.get(value)){
+                    if(visited[temp]==false){
+                        q.add(new pair(temp,value));
+                        visited[temp]=true;
+                    }
+                    else if(temp!=parent)return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+}
+class pair{
+    int value;
+    int parent;
+    
+    pair(int v,int p){
+        value = v;
+        parent = p;
     }
 }
