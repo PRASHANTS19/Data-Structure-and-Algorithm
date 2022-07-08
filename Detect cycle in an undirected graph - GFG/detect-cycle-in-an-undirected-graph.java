@@ -39,31 +39,22 @@ class Solution {
         
         for(int i=0; i<V; i++){
             if(visited[i]==false){
-                if(cycle(i,visited,adj))
+                if(cycle(i,-1,visited,adj))
                     return true;
             }
         }
         return false;
     }
     
-    boolean cycle(int node,boolean visited[],ArrayList<ArrayList<Integer>> adj){
-        Queue<pair> q = new LinkedList<>();
-        q.add(new pair(node,-1));
+    boolean cycle(int node,int parent,boolean visited[],ArrayList<ArrayList<Integer>> adj){
+        
         visited[node]=true;
-        while(q.isEmpty()!=true){
-            int size = q.size();
-            for(int i=0; i<size; i++){
-                int value = q.peek().value;
-                int parent = q.peek().parent;
-                q.remove();
-                for(int temp : adj.get(value)){
-                    if(visited[temp]==false){
-                        q.add(new pair(temp,value));
-                        visited[temp]=true;
-                    }
-                    else if(temp!=parent)return true;
-                }
+        
+        for(int temp : adj.get(node)){
+            if(visited[temp]==false){
+                if(cycle(temp,node,visited,adj))return true;
             }
+            else if(temp!=parent)return true;
         }
         return false;
     }
