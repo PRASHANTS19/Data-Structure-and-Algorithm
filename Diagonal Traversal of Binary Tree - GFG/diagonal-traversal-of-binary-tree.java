@@ -110,11 +110,23 @@ class GfG {
 
 //User function Template for Java
 
+/* Node is defined as
+class Node{
+    int data;
+    Node left;
+    Node right;
+    Node(int data){
+        this.data = data;
+        left=null;
+        right=null;
+    }
+}*/
 class Tree
 {
      public ArrayList<Integer> diagonal(Node root)
       {
-        ArrayList<Integer> res = new ArrayList<>();
+           //add your code here.
+            ArrayList<Integer> res = new ArrayList<>();
         Queue<Node> q = new LinkedList<>();
         q.add(root);
         
@@ -128,6 +140,5 @@ class Tree
             }
         }
         return res;
-        
       }
 }
