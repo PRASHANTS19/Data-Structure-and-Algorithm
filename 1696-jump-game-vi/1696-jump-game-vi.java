@@ -1,21 +1,18 @@
 class Solution {
- public int maxResult(int[] nums, int k) {
-        PriorityQueue<Pair<Integer, Integer>> pq = new PriorityQueue<>(k,
-                Comparator.comparing(o -> -o.getValue())) {{
-            offer(new Pair<>(0, nums[0]));
-        }};
-
-        int max = nums[0], ans;
-        for (int i = 1; i < nums.length; i++) {
-            while (pq.peek().getKey() < i - k) { // We just compare the top node and see if it is outside of window or not.
-                pq.poll();
-            }
-
-            max = nums[i] + pq.peek().getValue();
-            pq.offer(new Pair<>(i, max));
+    public int maxResult(int[] arr, int k) {
+        
+        PriorityQueue<int[]> pq = new PriorityQueue<>((p,q)->q[1]-p[1]);
+        
+        pq.add(new int[]{0,arr[0]});
+        int res = arr[0];
+        for(int i=1; i<arr.length; i++){
+            
+            while(pq.peek()[0]<i-k)
+                pq.remove();
+            
+            res = arr[i]+pq.peek()[1];
+            pq.add(new int[]{i,res});
         }
-
-        return max;
+        return res;
     }
 }
-
