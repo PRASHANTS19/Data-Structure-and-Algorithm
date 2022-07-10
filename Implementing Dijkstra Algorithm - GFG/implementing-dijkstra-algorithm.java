@@ -58,34 +58,35 @@ class Solution
 {
     //Function to find the shortest distance of all the vertices
     //from the source vertex S.
-    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int source)
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int s)
     {
         // Write your code here
-        int distance[] = new int[V];
-        for(int i=0; i<V; i++)
-            distance[i] = (int)1e9;
-            
-            
-        distance[source] = 0;
-        Queue<Integer> q = new LinkedList<>();
-        q.add(source);
+        int arr[] = new int[V];
+        Arrays.fill(arr,(int)1e9);
         
-        while(q.isEmpty()!=true){
-            int size = q.size();
-            for(int i=0; i<size;i++){
-                int temp = q.remove();
-                int dis = distance[temp];
-                
-                for(ArrayList<Integer> x : adj.get(temp)){
-                    if(distance[x.get(0)]>dis+x.get(1)){
-                        distance[x.get(0)] = dis+x.get(1);
-                        q.add(x.get(0));
+        arr[s] = 0;
+        boolean visited[] = new boolean[V];
+        visited[s] = true;
+        PriorityQueue<int[]> pq = new PriorityQueue<>((p,q)->p[1]-q[1]);
+        pq.add(new int[]{s,0});
+        
+        while(pq.isEmpty()!=true){
+            int size = pq.size();
+            for(int i=0; i<size; i++){
+                int node = pq.peek()[0];
+                int weight = pq.peek()[1];
+                pq.remove();
+                visited[node]=true;
+                for(ArrayList<Integer> list : adj.get(node)){
+                    if(visited[list.get(0)]==false){
+                        arr[list.get(0)] = Math.min(arr[list.get(0)],list.get(1)+weight);
+                        pq.add(new int[]{list.get(0),list.get(1)+weight});
                     }
-                    else continue;
+                    
                 }
             }
         }
-        return distance;
+        return arr;
     }
 }
 
