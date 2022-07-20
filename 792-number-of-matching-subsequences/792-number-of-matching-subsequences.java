@@ -1,25 +1,35 @@
 class Solution {
-    public int numMatchingSubseq(String S, String[] words) {
-        Map<Character, Deque<String>> map = new HashMap<>();
-        for (char c = 'a'; c <= 'z'; c++) {
-            map.putIfAbsent(c, new LinkedList<String>());
+    public int numMatchingSubseq(String s, String[] words) {
+        ArrayList<ArrayList<Integer>>list= new ArrayList<>();
+        
+        for(int i=0; i<26; i++)
+            list.add(new ArrayList<>());
+        
+        for(int i=0; i<s.length(); i++){
+            list.get(s.charAt(i)-'a').add(i);
         }
-        for (String word : words) {
-            map.get(word.charAt(0)).addLast(word);
-        }
-
         int count = 0;
-        for (char c : S.toCharArray()) {
-            Deque<String> queue = map.get(c);
-            int size = queue.size();
-            for (int i = 0; i < size; i++) {
-                String word = queue.removeFirst();
-                if (word.length() == 1) {
-                    count++;
-                } else {
-                    map.get(word.charAt(1)).addLast(word.substring(1));
+        for(String str : words){
+            int lastChange = -1;
+            boolean flag = false;
+            //aa
+            for(int i=0; i<str.length(); i++){
+                int prev = lastChange;
+                ArrayList<Integer> ll = list.get(str.charAt(i)-'a');
+                
+                for(int x : ll){
+                    if(x>lastChange){
+                        flag = true;
+                        lastChange = x;
+                        break;
+                    }
+                }
+                if(lastChange==prev){
+                    flag = false;
+                    break;
                 }
             }
+            if(flag)count++;
         }
         return count;
     }
