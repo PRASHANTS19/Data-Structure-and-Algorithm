@@ -1,38 +1,40 @@
 class Solution {
     public int[] sortArray(int[] arr) {
+        int l = 0;
+        int r = arr.length-1;
         
-        int l=0;
-        int h=arr.length-1;
-        quickSort(arr,l,h);
+        mergeSort(arr,l,r);
         return arr;
     }
-    void quickSort(int arr[],int l,int h){
-        
-        if(l<h){
-            int pivot=partition(arr,l,h);
-            quickSort(arr,l,pivot-1);
-            quickSort(arr,pivot+1,h);
+    void mergeSort(int arr[],int l,int r){
+        if(l<r){
+            int mid = (l+r)/2;
+            mergeSort(arr,l,mid);
+            mergeSort(arr,mid+1,r);
+            merge(arr,l,mid,r);
         }
     }
-    int partition(int arr[],int l,int h){
+    void merge(int arr[],int l,int mid,int r){
         int i=l;
-        int j=h;
-        int pivot=arr[l];
+        int j=mid+1;
+        int k=0;
+        int temp[] = new int[r-l+1];
         
-        while(i<j){
-            while(arr[i]<=pivot && i<h)i++;
-            while(arr[j]>pivot && j>=l)j--;
-            if(i<j)
-                swap(arr,i,j); 
+        while(i<=mid && j<=r){
+            if(arr[i]<arr[j]){
+                temp[k++] = arr[i++];
+            }
+            else{
+                temp[k++] = arr[j++];
+            }
         }
-        swap(arr,l,j);
-        return j;  //returning the pivot;
+        while(i<=mid)
+            temp[k++]=arr[i++];
         
+        while(j<=r)
+            temp[k++]=arr[j++];
         
-    }
-    void swap(int arr[],int i,int j){
-        int temp=arr[i];
-        arr[i]=arr[j];
-        arr[j]=temp;
+        for(int x=l; x<=r; x++)
+            arr[x] = temp[x-l];    
     }
 }
