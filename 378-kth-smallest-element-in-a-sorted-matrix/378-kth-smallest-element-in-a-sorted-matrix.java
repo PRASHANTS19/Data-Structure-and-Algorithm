@@ -1,15 +1,25 @@
 class Solution {
     public int kthSmallest(int[][] matrix, int k) {
-     
-        int m = matrix.length,n=matrix[0].length;
-        int arr[] =  new int[m*n];
-        int x=0;
-        for(int i=0; i<m; i++){
+        
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int count = 0;
+        for(int i=0; i<n; i++){
             for(int j=0; j<n; j++){
-                arr[x++]=matrix[i][j];
+                if(count==k){
+                   if(pq.peek()>matrix[i][j]){
+                       pq.remove();
+                       count--;
+                   } 
+                }
+                if(count<k){
+                    pq.add(matrix[i][j]);
+                    count++;
+                }
             }
         }
-        Arrays.sort(arr);
-        return arr[k-1];
+        return pq.peek();
     }
 }
