@@ -1,38 +1,40 @@
 class Solution {
-    public int shortestPathBinaryMatrix(int[][] grid) {
-        
-        int m = grid.length;
-        int n = m;
-        
-        if(grid[0][0]!=0 || grid[m-1][n-1]!=0)return -1;
-        int dir[][] = {{1,0},{0,1},{-1,0},{0,-1},{1,1},{-1,1},{-1,-1},{1,-1}};
-        
-        boolean visited[][] = new boolean[m][n];
-        
-        Queue<int[]> q = new LinkedList<>();
+    
+    public int shortestPathBinaryMatrix(int[][] arr) {
+        int dir[][] = {{1,0},{0,1},{-1,0},{0,-1},{1,1},{1,-1},{-1,1},{-1,-1}};
+        int n = arr.length;
+        if(arr[0][0]==1 || arr[n-1][n-1]==1)return -1;
+        Queue<int[]>q = new LinkedList<>();
+        boolean visited[][] = new boolean[n][n];
         q.add(new int[]{0,0});
-        int res = 0;
+        visited[0][0]=true;
+        int count = 0;
+        boolean found = false;
         while(q.isEmpty()!=true){
-            int size = q.size();
-            for(int i=0; i<size; i++){
-                int[] pop = q.remove();
-                
-                if(pop[0]==m-1 && pop[1]==n-1)
-                    return res+1;
-                
-                for(int k=0; k<8; k++){
-                    int nextX = pop[0]+dir[k][0];
-                    int nextY = pop[1]+dir[k][1];
+            int s = q.size();
+            for(int i=0; i<s; i++){
+                int x = q.peek()[0];
+                int y = q.peek()[1];
+                q.remove();
+                if(x==n-1 && y==n-1){
+                    found=true;
+                    break;
+                }
+                for(int ii=0; ii<8; ii++){
+                    int xx = x+dir[ii][0];
+                    int yy = y+dir[ii][1];
                     
-                    if(nextX>=0&&nextY>=0&&nextX<m&&nextY<n&&grid[nextX][nextY]==0 && visited[nextX][nextY]==false){
-                        q.add(new int[]{nextX,nextY});
-                        visited[nextX][nextY]=true;
-                    }
-                    
-                 }
+                    if(xx<0||yy<0||xx>=n||yy>=n||visited[xx][yy]==true||arr[xx][yy]==1)continue;
+                    q.add(new int[]{xx,yy});
+                    visited[xx][yy]=true;
+                }
             }
-            res++;
+            
+            count++;
+            if(found)break;
         }
-        return -1;
+        if(found==false)return -1;
+        return count;
+        
     }
 }
