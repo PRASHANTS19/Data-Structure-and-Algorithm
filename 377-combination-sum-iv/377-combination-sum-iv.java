@@ -11,8 +11,11 @@ class Solution {
         if(target==0)return 1;
         if(i==arr.length || target<0)return 0;
         if(dp[i][target]!=-1)return dp[i][target];
-        
-        int select = solve(arr,target-arr[i],0);
+    
+        int select = 0;
+        if(arr[i]<=target)
+             select = solve(arr,target-arr[i],0);
+    
         int notselect = solve(arr,target,i+1);
         
         return dp[i][target]=select+notselect;
