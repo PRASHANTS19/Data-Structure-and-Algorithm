@@ -14,6 +14,7 @@ class Solution {
             else return false;
         }
         if(dp[i]!=-1)return dp[i]==1?true:false;
+        
         boolean a=false,b=false,c=false;
         if(arr[i]==arr[i+1]){
             a=solve(arr,i+2);
