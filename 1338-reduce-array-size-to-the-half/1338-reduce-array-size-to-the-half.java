@@ -10,12 +10,10 @@ class Solution {
         HashMap<Integer,Integer> map = new HashMap<>();
         
         for(int i : arr){
-            if(map.containsKey(i)==false){
+            if(map.containsKey(i)==false)
                 map.put(i,1);
-            }
-            else{
+            else
                 map.put(i,map.get(i)+1);
-            }
         }
         ArrayList<int[]> list = new ArrayList<>();
         for(Map.Entry<Integer,Integer>entry : map.entrySet()){
