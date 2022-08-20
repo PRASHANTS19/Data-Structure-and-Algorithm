@@ -1,21 +1,25 @@
 class Solution {
-    public boolean isPossible(int[] nums) {
-    Map<Integer, Integer> freq = new HashMap<>(), appendfreq = new HashMap<>();
-    for (int i : nums) freq.put(i, freq.getOrDefault(i,0) + 1);
-    for (int i : nums) {
-        if (freq.get(i) == 0) continue;
-        else if (appendfreq.getOrDefault(i,0) > 0) {
-            appendfreq.put(i, appendfreq.get(i) - 1);
-            appendfreq.put(i+1, appendfreq.getOrDefault(i+1,0) + 1);
-        }   
-        else if (freq.getOrDefault(i+1,0) > 0 && freq.getOrDefault(i+2,0) > 0) {
-            freq.put(i+1, freq.get(i+1) - 1);
-            freq.put(i+2, freq.get(i+2) - 1);
-            appendfreq.put(i+3, appendfreq.getOrDefault(i+3,0) + 1);
+    public boolean isPossible(int[] arr) {
+        
+        HashMap<Integer,Integer> map = new HashMap<>(),dummy = new HashMap<>();
+        
+        for(int i : arr)map.put(i,map.getOrDefault(i,0)+1);
+        
+        for(int i : arr){
+            if(map.get(i)==0)continue;
+             else if(dummy.getOrDefault(i,0)>0){
+                dummy.put(i+1,dummy.getOrDefault(i+1,0)+1);
+                dummy.put(i,dummy.getOrDefault(i,0)-1);
+            }
+            else if(map.getOrDefault(i+1,0)>0 && map.getOrDefault(i+2,0)>0){
+                dummy.put(i+3,dummy.getOrDefault(i+3,0)+1);
+                map.put(i+1,map.get(i+1)-1);
+                map.put(i+2,map.get(i+2)-1);
+            }
+            else return false;
+            
+            map.put(i,map.get(i)-1);
         }
-        else return false;
-        freq.put(i, freq.get(i) - 1);
+        return true;
     }
-    return true;
-}
 }
