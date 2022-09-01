@@ -17,16 +17,17 @@ class Solution {
     static int count;
     public int goodNodes(TreeNode root) {
         count = 0;
-        solve(root,root.val);
-        return count;
+        return solve(root,root.val);
+
     }
-    void solve(TreeNode root,int max){
-        if(root==null)return;
+    int solve(TreeNode root,int max){
+        if(root==null)return 0;
         
-        if(root.val>=max)count++;
+        int l = solve(root.left,Math.max(max,root.val));
+        int r = solve(root.right,Math.max(max,root.val));
         
-        solve(root.left,Math.max(max,root.val));
-        solve(root.right,Math.max(max,root.val));
+        if(root.val>=max)return 1+l+r;
+        return l+r;
         
     }
 }
