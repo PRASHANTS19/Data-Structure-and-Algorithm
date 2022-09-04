@@ -52,8 +52,7 @@ class Solution {
                    Collections.sort(sortl);
                    m.put(entry.getKey(),sortl);
                }
-           } 
-            
+           }  
         }
         for(ArrayList<Integer> l: m.values()){
             matrix.add(new ArrayList<>(l));
