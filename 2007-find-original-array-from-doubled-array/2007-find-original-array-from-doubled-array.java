@@ -17,6 +17,8 @@ class Solution {
                     res[k++]=arr[i];
                     map.put(arr[i]*2,map.get(arr[i]*2)-1);
                     map.put(arr[i],map.get(arr[i])-1);
+                    if(map.get(arr[i])==0)map.remove(arr[i]);
+                    if(map.containsKey(arr[i]*2) && map.get(arr[i]*2)==0)map.remove(arr[i]*2);
                 }  
                 else return new int[]{};
             }
