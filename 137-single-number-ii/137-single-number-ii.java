@@ -1,13 +1,18 @@
 class Solution {
     public int singleNumber(int[] arr) {
-        HashMap<Integer,Integer>map = new HashMap<>();
         
-        for(int i : arr){
-            map.put(i,map.getOrDefault(i,0)+1);
+       int ans = 0;
+        for(int i=0; i<32; i++){
+            int one=0;
+            for(int ii=0; ii<arr.length; ii++){
+                if((arr[ii] >> i & 1) == 1)
+                    one++;
+                
+            }
+            one %= 3;
+            ans |= one<<i;
         }
-        for(Map.Entry<Integer,Integer>entry : map.entrySet()){
-            if(entry.getValue()==1)return entry.getKey();
-        }
-        return -1;
+        return ans;
+        
     }
 }
