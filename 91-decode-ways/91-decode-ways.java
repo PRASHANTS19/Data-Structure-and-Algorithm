@@ -1,32 +1,27 @@
 class Solution {
     int dp[];
     public int numDecodings(String s) {
-        if(s.charAt(0)=='0')return 0;
-        HashSet<String> set = new HashSet<>();
-        for(int i=1; i<=26; i++){
-            set.add(Integer.toString(i));
-        }
-        dp = new int[s.length()];
+       int n = s.length();
+        dp = new int[n];
         Arrays.fill(dp,-1);
-
-        return solve(s,0,set);
+        
+        return solve(s,0);
     }
-    int solve(String s,int start,HashSet<String>set){
-        if(start==s.length())return 1;
-        if(s.charAt(start)=='0')return 0;
-        if(start==s.length()-1)return 1;
+    int solve(String s,int i){
+        if(i>=s.length())return 1; 
+        if(s.charAt(i)=='0')return 0;
+        if(i==s.length()-1)return 1;
         
-        if(dp[start]!=-1)return dp[start];
+        if(dp[i]!=-1)return dp[i];
         
-        int one = solve(s,start+1,set);
-        int two = 0;
-        String sub = s.substring(start,start+2);
-        if(set.contains(sub)){
-            two = solve(s,start+2,set);
+        int n = (s.charAt(i)-'0')*10 + (s.charAt(i+1)-'0');
+        int select=0,notselect=0;
+        notselect = solve(s,i+1);
+        if(n>0 && n<=26){
+            select = solve(s,i+2);
         }
         
-        return dp[start]=one+two;
         
-       
+        return dp[i]=select+notselect;
     }
 }
