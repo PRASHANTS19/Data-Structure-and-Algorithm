@@ -25,12 +25,10 @@ class Solution {
             return false;
         }
         boolean left=false,right=false;
-        if(root.left!=null){
             left= solve(root.left,targetSum-root.val);
-        }
-        if(root.right!=null){
+
             right= solve(root.right,targetSum-root.val);
-        }
+
         
         return left||right;
     }
