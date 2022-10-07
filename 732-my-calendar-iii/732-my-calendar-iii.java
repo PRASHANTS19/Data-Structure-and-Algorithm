@@ -11,7 +11,8 @@ class MyCalendarThree {
         
           int max=0, count = 0;
         for(int x : map.values()){
-             max = Math.max(max, count += x);
+            count += x;
+             max = Math.max(max, count);
         }
         return max;
 
