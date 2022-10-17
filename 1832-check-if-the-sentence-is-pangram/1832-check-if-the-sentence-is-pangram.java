@@ -1,10 +1,13 @@
 class Solution {
     public boolean checkIfPangram(String s) {
         
-        HashSet<Character> set = new HashSet<>();
+        int arr[] = new int[26];
         for(int i=0; i<s.length(); i++){
-            set.add(s.charAt(i));
+            arr[s.charAt(i)-'a']++;
         }
-        return set.size()==26;
+        for(int i :arr){
+            if(i==0)return false;
+        }
+        return true;
     }
 }
