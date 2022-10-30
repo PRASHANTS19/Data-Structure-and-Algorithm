@@ -21,7 +21,8 @@ class Solution {
                 
                 if(temp[0]==m-1 && temp[1]==n-1){
                     ans = Math.min(ans,steps);
-                    // visited[m-1][n-1][k]=false;
+                    // visited[m-1][n-1][k]=false;4
+                    break;
                 }
                 for(int i=0; i<4; i++){
                     int x=temp[0],y=temp[1];
@@ -41,6 +42,7 @@ class Solution {
                 }
             }
             steps++;
+            if(ans!=(int)1e9)break;
         }
         
         return ans>=(int)1e9?-1:ans;
