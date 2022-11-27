@@ -21,7 +21,7 @@ class Solution {
         ListNode temp = t;
         
         for(int i=0; i<n; i++){
-            if(list.get(i)>=right[i]){
+            if(list.get(i)==right[i]){
                 temp.next = new ListNode(list.get(i));
                 temp = temp.next;
             }
