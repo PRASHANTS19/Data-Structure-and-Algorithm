@@ -1,30 +1,32 @@
 class Solution {
     int dp[][];
     public int minFallingPathSum(int[][] arr) {
-        int n= arr.length;
+        int n = arr.length;
         dp = new int[n][n];
         
         for(int i=0; i<n; i++){
-            Arrays.fill(dp[i],Integer.MAX_VALUE);
+            Arrays.fill(dp[i],(int)1e9);
         }
-        int ans = (int)1e9;
-        for(int i=0; i<n; i++){
-            ans = Math.min(ans,solve(arr,n,0,i));
+        int min = (int)1e9;
+        
+        for(int i=0; i<arr[0].length; i++){
+            min = Math.min(min,solve(arr,0,i,new boolean[n][n]));
         }
-        return ans;
-        
-        
+        return min;
     }
-    int solve(int arr[][],int n,int i,int j){
-        if(i<0||j<0||i>n-1||j>n-1)return (int)1e9;
-        if(i==n-1){
-            return arr[i][j];
-        }
-        if(dp[i][j]!=Integer.MAX_VALUE)return dp[i][j];
-        int x = solve(arr,n,i+1,j);
-        int y = solve(arr,n,i+1,j+1);
-        int z = solve(arr,n,i+1,j-1);
+    int solve(int[][] arr,int i,int j,boolean[][] visited){
+        if(i<0 || j<0 || i>=arr.length|| j>=arr[0].length)return (int)1e9;
+        if(i==arr.length-1){
+             return arr[i][j];
+         }
+        if(dp[i][j]!=(int)1e9)return dp[i][j];
         
-        return dp[i][j]=arr[i][j]+Math.min(Math.min(x,y),z);
+        int left = solve(arr,i+1,j-1,visited);
+        int right = solve(arr,i+1,j,visited);
+        int down = solve(arr,i+1,j+1,visited);
+        
+        
+        return dp[i][j]=arr[i][j]+ Math.min(left,Math.min(right,down));
+        
     }
 }
