@@ -1,25 +1,26 @@
 class Solution {
     int dp[][];
-    public int longestCommonSubsequence(String s1, String s2) {
-        int m =s1.length();
-        int n = s2.length();
-        dp = new int[m][n];
-        for(int i=0; i<m; i++){
+    public int longestCommonSubsequence(String t1, String t2) {
+        dp = new int[t1.length()][t2.length()];
+        
+        for(int i=0; i<t1.length(); i++){
             Arrays.fill(dp[i],-1);
         }
-        return solve(s1,s2,m-1,n-1);
+        
+        return solve(0,0,t1,t2);
     }
-    int solve(String s1,String s2, int m,int n){
-        if(m<0||n<0)return 0;
-        if(dp[m][n]!=-1)return dp[m][n];
+    int solve(int i,int j,String t1, String t2){
+        if(i>=t1.length() || j>=t2.length())return 0;
         
-        int notselect1 = 0+solve(s1,s2,m-1,n);
-        int notselect2 = 0+solve(s1,s2,m,n-1);
-        int select = 0;
-        if(s1.charAt(m)==s2.charAt(n)){
-         select = 1+solve(s1,s2,m-1,n-1);   
+        if(dp[i][j]!=-1)return dp[i][j];
+        int select=0,ns1=0,ns2=0;
+        
+        if(t1.charAt(i)==t2.charAt(j)){
+            select = 1+solve(i+1,j+1,t1,t2);
         }
+        ns1 = 0+solve(i+1,j,t1,t2);
+        ns2 = 0+solve(i,j+1,t1,t2);
         
-        return dp[m][n]=Math.max(Math.max(notselect1,notselect2),select);
+        return dp[i][j]=Math.max(select,Math.max(ns1,ns2));
     }
 }
