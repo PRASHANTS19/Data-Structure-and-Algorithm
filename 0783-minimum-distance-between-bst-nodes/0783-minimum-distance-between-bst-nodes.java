@@ -14,28 +14,24 @@
  * }
  */
 class Solution {
-    ArrayList<Integer> list;
+    int ans= (int)1e9;
+    Integer prev = null;
     public int minDiffInBST(TreeNode root) {
-        list = new ArrayList<>();
-        
-        int ans = (int)1e9;
-        
         
         solve(root);
-        for(int i=1; i<list.size(); i++){
-            ans = Math.min(ans,Math.abs(list.get(i)-list.get(i-1)));
-        }
         return ans;
             
             
     }
     void solve(TreeNode root){
         if(root==null)return;
-        
-       
+           
         solve(root.left);
-         list.add(root.val);
+        if(prev!=null)
+            ans = Math.min(ans,Math.abs(prev-root.val));
         
+        prev = root.val;
+
         solve(root.right);
         
     }
