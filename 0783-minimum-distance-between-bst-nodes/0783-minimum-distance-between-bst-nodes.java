@@ -22,9 +22,7 @@ class Solution {
         
         
         solve(root);
-        System.out.print(list.get(0)+ " ");
         for(int i=1; i<list.size(); i++){
-            System.out.print(list.get(i)+ " ");
             ans = Math.min(ans,Math.abs(list.get(i)-list.get(i-1)));
         }
         return ans;
