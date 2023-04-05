@@ -1,13 +1,17 @@
 class Solution {
-    public int minimizeArrayValue(int[] arr) {
-        long sum= 0;
-        long max = 0;
-        for(int i=0; i<arr.length; i++){
-            sum += arr[i];
-            long avg = (sum+i)/(i+1);
-            max = Math.max(max,avg);
+    public int minimizeArrayValue(int[] nums) {
+        int n = nums.length;
+        long ans = 0;
+        long sum =0;
+        for(int i=0; i<n; i++){
+            sum += nums[i];
+            long avg = (long)(Math.ceil(sum/((i+1)*1.0)));
+            ans = Math.max(ans,avg);
         }
+
         
-        return (int)max;
+        return (int)ans;
+        
+        
     }
 }
