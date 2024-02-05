@@ -1,65 +1,50 @@
 class Solution {
     public String minWindow(String s, String t) {
-
-        int n = s.length();
-        if(t.length()>n)return "";
-        int freq[] = new int[80];
+        int scount[] = new int[200];
+        int tcount[] = new int[200];
+        
         for(int i=0; i<t.length(); i++){
-            freq[t.charAt(i)-'A']++;
-        }
-        int arr[] = new int[80];
-        
-       int i=0,j=0,left=-1,right=-1,min=Integer.MAX_VALUE;
-        
-        for(i=0; i<t.length(); i++){
-            arr[s.charAt(i)-'A']++;
-        }
-       
-        while(i<n){
-            boolean flag = true;
-            for(int k=0; k<80; k++){
-                if(arr[k]<freq[k]){
-                    flag= false;
-                    break;
-                }
-            }
-            if(flag){
-                if(min>i-j){
-                    min = i-j;
-                    left = j;
-                    right = i;
-                }
-                arr[s.charAt(j)-'A']--;
-                j++;
-            }
-            else{
-                arr[s.charAt(i)-'A']++;
-                i++;
-            }
-        }
-        while(j<n){
-            boolean flag = true;
-            for(int k=0; k<80; k++){
-                if(arr[k]<freq[k]){
-                    flag= false;
-                    break;
-                }
-            }
-            if(flag){
-                if(min>i-j){
-                    min = i-j;
-                    left = j;
-                    right = i;
-                }
-                arr[s.charAt(j)-'A']--;
-                j++;
-            }
-            else break;
+            tcount[t.charAt(i)-'A']++;
         }
         
-        if(min==Integer.MAX_VALUE)return "";
-        // System.out.print(i + " " + j);
-        return s.substring(left,right);
-       
+        int i=0, j=0;
+        int min = (int)1e5;
+        String fans = "";
+        int left = -1;
+        int right = -1;
+        while(j<s.length() && i<s.length())
+        {
+            scount[s.charAt(j)-'A']++;
+            if(j-i+1>=t.length()){
+                // System.out.print("i="+i + " "+ "j="+j);
+                while(check(scount,tcount) && i<=j){
+                    if(min>j-i){
+                        min = j-i;
+                        String ans = "";
+                        left = i;
+                        right = j;
+                    }
+                    scount[s.charAt(i)-'A']--;
+                    i++;
+                }
+            }
+            j++;
+            
+        }   
+        if(right!=-1 && left!=-1){
+            for(int x = left; x<=right; x++){
+                fans += s.charAt(x);
+            }
+        } 
+        return fans;
+    }
+    boolean check(int scount[],int tcount[]){
+        
+        for(int i=0; i<200; i++){
+            if(tcount[i]>0){
+                if(scount[i]<tcount[i])return false;
+            }
+        }
+        return true;
     }
 }
