@@ -1,26 +1,19 @@
 class Solution {
-     public int shortestSubarray(int[] A, int K) {
-        if (A.length == 0) return -1;
-        TreeMap<Long, Integer> tree = new TreeMap<>();
-        long total = 0;
-        int minLen = Integer.MAX_VALUE;
-        for (int i = 0; i < A.length; i++) {
-            total += A[i];
-            Long num = tree.floorKey(total-K);
-            if (total >= K) {
-                if (i+1 < minLen) {
-                    minLen = i+1;
-                }
+    public int shortestSubarray(int[] arr, int k) {
+        
+        PriorityQueue<long[]> pq = new PriorityQueue<>((p,q)->Long.compare(p[0],q[0]));
+        
+        int ans = (int)1e9;
+        long sum = 0;
+        pq.add(new long[]{0,-1});
+        for(int i=0; i<arr.length; i++){
+            sum += arr[i];
+            pq.add(new long[]{sum,i});
+            while(pq.isEmpty()!=true && sum-pq.peek()[0]>=k){
+                long node[] = pq.remove();
+                ans = Math.min(ans, i-(int)node[1]);
             }
-            while (num != null) {
-                if (i-tree.get(num) < minLen) {
-                    minLen = i-tree.get(num);
-                }
-                tree.remove(num);
-                num = tree.lowerKey(num);
-            }
-            tree.put(total, i);
         }
-        return minLen == Integer.MAX_VALUE ? -1 : minLen;
+        return ans==(int)1e9? -1:ans;
     }
 }
